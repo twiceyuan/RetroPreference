@@ -1,5 +1,8 @@
 # RetroPreference
 
+[![](https://jitpack.io/v/twiceyuan/RetroPreference.svg)](https://jitpack.io/#twiceyuan/RetroPreference)
+
+
 SharedPreferences wrapper inspired by Retrofit，类型安全的 SharedPreferences 工具。
 
 * [x] Type Safe
@@ -41,6 +44,26 @@ mSettings.launche_count().get(100); // 100 为默认值
 ```
 
 更多用例参考[测试用例](https://github.com/twiceyuan/RetroPreference/blob/master/retropreference/src/androidTest/java/com/twiceyuan/library/ExampleInstrumentedTest.java)
+
+## 引用
+
+[![](https://jitpack.io/v/twiceyuan/RetroPreference.svg)](https://jitpack.io/#twiceyuan/RetroPreference)
+
+
+```groovy
+// project
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
+}
+
+// module
+dependencies {
+    compile 'com.github.twiceyuan:RetroPreference:[last-version]'
+}
+```
 
 ## License
 
