@@ -9,7 +9,7 @@ import java.util.Set;
  */
 public interface Settings {
 
-    Preference<Integer> launche_count();
+    Preference<Integer> launch_count();
 
     Preference<Boolean> is_login();
 

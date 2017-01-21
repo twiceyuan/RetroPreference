@@ -40,9 +40,9 @@ mSettings = RetroPreference.create(appContext, Settings.class, Context.MODE_PRIV
 // 保存启动次数
 mSettings.launche_count().set(7);
 // 获得存储的值
-mSettings.launche_count().get();
+mSettings.launche_count().getWithDefault();
 // or
-mSettings.launche_count().get(100); // 100 为默认值
+mSettings.launche_count().getWithDefault(100); // 100 为默认值
 ```
 
 更多用例参考[测试用例](https://github.com/twiceyuan/RetroPreference/blob/master/retropreference/src/androidTest/java/com/twiceyuan/library/ExampleInstrumentedTest.java)

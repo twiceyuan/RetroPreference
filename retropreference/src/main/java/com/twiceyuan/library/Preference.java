@@ -8,5 +8,6 @@ package com.twiceyuan.library;
 public interface Preference<T> {
     void set(T t);
     T get();
-    T get(T defaultValue);
+    T getWithDefault(T defaultValue);
+    void clear();
 }

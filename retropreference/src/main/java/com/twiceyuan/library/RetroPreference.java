@@ -48,13 +48,18 @@ public class RetroPreference {
 
                     @Override
                     public Object get() {
-                        return get(handler.defaultValue());
+                        return getWithDefault(handler.defaultValue());
                     }
 
                     @Override
-                    public Object get(Object defaultValue) {
+                    public Object getWithDefault(Object defaultValue) {
                         //noinspection unchecked
                         return handler.get(key, defaultValue);
+                    }
+
+                    @Override
+                    public void clear() {
+                        handler.clear(key);
                     }
                 };
             }

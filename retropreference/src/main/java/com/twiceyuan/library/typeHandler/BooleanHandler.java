@@ -22,4 +22,9 @@ public class BooleanHandler extends BaseTypeHandler<Boolean> {
     public Boolean get(String key, Boolean defaultValue) {
         return mPreferences.getBoolean(key, defaultValue);
     }
+
+    @Override
+    public Boolean defaultValue() {
+        return false;
+    }
 }

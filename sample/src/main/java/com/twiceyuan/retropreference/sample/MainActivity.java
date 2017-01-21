@@ -20,8 +20,8 @@ public class MainActivity extends AppCompatActivity {
         // Get preference item holder
         Preference<Integer> launchCount = settings.launchCount();
 
-        // get the preference value
-        Integer count = launchCount.get(/*defaultValue = */0);
+        // getWithDefault the preference value
+        Integer count = launchCount.getWithDefault(/*defaultValue = */0);
 
         count++;
         Toast.makeText(this, "Launch count: " + count, Toast.LENGTH_SHORT).show();

@@ -22,4 +22,8 @@ public abstract class BaseTypeHandler<Type> {
     public Type defaultValue() {
         return null;
     }
+
+    public void clear(String key) {
+        mPreferences.edit().remove(key).apply();
+    }
 }

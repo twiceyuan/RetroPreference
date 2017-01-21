@@ -20,6 +20,9 @@ public final class TypeHandlerFactory {
         if (type == Integer.class) {
             return (BaseTypeHandler<T>) new IntegerHandler(preferences);
         }
+        if (type == Boolean.class) {
+            return (BaseTypeHandler<T>) new BooleanHandler(preferences);
+        }
         if (type == Long.class) {
             return (BaseTypeHandler<T>) new LongHandler(preferences);
         }
