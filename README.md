@@ -45,7 +45,7 @@ mSettings.launche_count().getWithDefault();
 mSettings.launche_count().getWithDefault(100); // 100 为默认值
 ```
 
-更多用例参考[测试用例](https://github.com/twiceyuan/RetroPreference/tree/master/retropreference/src/androidTest/java/com/twiceyuan/library)
+更多用例参考[测试用例](https://github.com/twiceyuan/RetroPreference/tree/master/retropreference/src/androidTest/java/com/twiceyuan/retropreference)
 
 ## 引用
 
