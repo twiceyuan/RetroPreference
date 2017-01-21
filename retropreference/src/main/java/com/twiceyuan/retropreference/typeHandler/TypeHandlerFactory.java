@@ -1,8 +1,8 @@
-package com.twiceyuan.library.typeHandler;
+package com.twiceyuan.retropreference.typeHandler;
 
 import android.content.SharedPreferences;
 
-import com.twiceyuan.library.Utils;
+import com.twiceyuan.retropreference.Utils;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;

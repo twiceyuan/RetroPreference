@@ -1,4 +1,4 @@
-package com.twiceyuan.library;
+package com.twiceyuan.retropreference;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -6,8 +6,9 @@ import java.lang.reflect.WildcardType;
 
 /**
  * Created by twiceYuan on 20/01/2017.
+ *
+ * 类型操作的一些工具
  */
-
 public class Utils {
 
     /**

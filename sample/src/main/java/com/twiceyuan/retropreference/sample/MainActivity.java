@@ -4,8 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.twiceyuan.library.Preference;
-import com.twiceyuan.library.RetroPreference;
+import com.twiceyuan.retropreference.Preference;
+import com.twiceyuan.retropreference.RetroPreference;
 
 public class MainActivity extends AppCompatActivity {
 

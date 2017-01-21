@@ -1,9 +1,12 @@
-package com.twiceyuan.library;
+package com.twiceyuan.retropreference;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
+
+import com.twiceyuan.retropreference.preferences.AnnotationSettings;
+import com.twiceyuan.retropreference.preferences.Settings;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -20,16 +23,17 @@ import java.util.TreeSet;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 @RunWith(AndroidJUnit4.class)
-public class UseCaseTest {
+public class AnnotationTest {
 
-    private Settings mSettings;
-    private Context  mAppContext;
+    private AnnotationSettings mSettings;
+
+    private Context mAppContext;
 
     @Before
     public void useAppContext() throws Exception {
         // Context of the app under test.
         mAppContext = InstrumentationRegistry.getTargetContext();
-        mSettings = RetroPreference.create(mAppContext, Settings.class, Context.MODE_PRIVATE);
+        mSettings = RetroPreference.create(mAppContext, AnnotationSettings.class, Context.MODE_PRIVATE);
     }
 
     /**
@@ -37,7 +41,7 @@ public class UseCaseTest {
      */
     @Test
     public void testWriteWithSystemRead() {
-        mSettings.username().set("twiceYuan");
+        mSettings.usernamePreference().set("twiceYuan");
         SharedPreferences preferences = mAppContext.getSharedPreferences(
                 Settings.class.getSimpleName(),
                 Context.MODE_PRIVATE);
@@ -45,7 +49,7 @@ public class UseCaseTest {
         if (!stored.equals("twiceYuan")) {
             throw new AssertionError();
         }
-        mSettings.username().clear();
+        mSettings.usernamePreference().clear();
     }
 
     /**
@@ -54,13 +58,13 @@ public class UseCaseTest {
     @Test
     public void testReadWithSystemWrite() {
         SharedPreferences preferences = mAppContext.getSharedPreferences(
-                Settings.class.getSimpleName(),
+                RetroPreference.getFileName(AnnotationSettings.class),
                 Context.MODE_PRIVATE);
         preferences.edit().putString("username", "twiceYuan").apply();
 
-        String storedUsername = mSettings.username().get();
+        String storedUsername = mSettings.usernamePreference().get();
         Assert.assertEquals("twiceYuan", storedUsername);
-        mSettings.username().clear();
+        mSettings.usernamePreference().clear();
     }
 
     /**
@@ -68,12 +72,12 @@ public class UseCaseTest {
      */
     @Test
     public void getWithDefault() {
-        String username = mSettings.username().getWithDefault("Anonymous");
+        String username = mSettings.usernamePreference().getWithDefault("Anonymous");
         Assert.assertEquals(username, "Anonymous");
-        mSettings.username().set("twiceYuan");
-        username = mSettings.username().getWithDefault("Anonymous");
+        mSettings.usernamePreference().set("twiceYuan");
+        username = mSettings.usernamePreference().getWithDefault("Anonymous");
         Assert.assertEquals(username, "twiceYuan");
-        mSettings.username().clear();
+        mSettings.usernamePreference().clear();
     }
 
     /**
@@ -81,12 +85,12 @@ public class UseCaseTest {
      */
     @Test
     public void testInteger() {
-        mSettings.launch_count().set(7);
-        Integer stored = mSettings.launch_count().get();
+        mSettings.launchCount().set(7);
+        Integer stored = mSettings.launchCount().get();
         if (7 != stored) {
             throw new AssertionError();
         }
-        mSettings.launch_count().clear();
+        mSettings.launchCount().clear();
     }
 
     /**
@@ -94,10 +98,10 @@ public class UseCaseTest {
      */
     @Test
     public void testBoolean() {
-        mSettings.is_login().set(true);
-        Boolean isLogin = mSettings.is_login().get();
+        mSettings.isLogin().set(true);
+        Boolean isLogin = mSettings.isLogin().get();
         Assert.assertTrue(isLogin);
-        mSettings.is_login().clear();
+        mSettings.isLogin().clear();
     }
 
     /**
@@ -105,9 +109,9 @@ public class UseCaseTest {
      */
     @Test
     public void testFloat() {
-        mSettings.user_points().set(1.1f);
-        Assert.assertEquals(1.1f, mSettings.user_points().get(), 0);
-        mSettings.user_points().clear();
+        mSettings.userPoints().set(1.1f);
+        Assert.assertEquals(1.1f, mSettings.userPoints().get(), 0);
+        mSettings.userPoints().clear();
     }
 
     /**
@@ -115,9 +119,9 @@ public class UseCaseTest {
      */
     @Test
     public void testLong() {
-        mSettings.last_login().set(12378217381L);
-        Assert.assertEquals(12378217381L, mSettings.last_login().get(), 0);
-        mSettings.last_login().clear();
+        mSettings.lastLogin().set(12378217381L);
+        Assert.assertEquals(12378217381L, mSettings.lastLogin().get(), 0);
+        mSettings.lastLogin().clear();
     }
 
     /**
@@ -125,9 +129,9 @@ public class UseCaseTest {
      */
     @Test
     public void testString() {
-        mSettings.username().set("twiceYuan");
-        Assert.assertEquals("twiceYuan", mSettings.username().get());
-        mSettings.username().clear();
+        mSettings.usernamePreference().set("twiceYuan");
+        Assert.assertEquals("twiceYuan", mSettings.usernamePreference().get());
+        mSettings.usernamePreference().clear();
     }
 
     /**
@@ -140,8 +144,8 @@ public class UseCaseTest {
         originSet.add("World");
         originSet.add("Blog");
         originSet.add("Singularity");
-        mSettings.user_tags().set(originSet);
-        Set<String> storedSet = mSettings.user_tags().get();
+        mSettings.userTags().set(originSet);
+        Set<String> storedSet = mSettings.userTags().get();
 
         Object[] originArray = originSet.toArray();
         Object[] storedArray = storedSet.toArray();
@@ -150,6 +154,6 @@ public class UseCaseTest {
         Arrays.sort(storedArray);
 
         Assert.assertArrayEquals(originArray, storedArray);
-        mSettings.user_tags().clear();
+        mSettings.userTags().clear();
     }
 }

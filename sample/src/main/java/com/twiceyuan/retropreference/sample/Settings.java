@@ -1,6 +1,6 @@
 package com.twiceyuan.retropreference.sample;
 
-import com.twiceyuan.library.Preference;
+import com.twiceyuan.retropreference.Preference;
 
 /**
  * Created by twiceYuan on 20/01/2017.

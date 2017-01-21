@@ -1,4 +1,6 @@
-package com.twiceyuan.library;
+package com.twiceyuan.retropreference.preferences;
+
+import com.twiceyuan.retropreference.Preference;
 
 import java.util.Set;
 
