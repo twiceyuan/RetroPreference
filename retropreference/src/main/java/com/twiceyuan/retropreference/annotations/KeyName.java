@@ -1,7 +1,9 @@
 package com.twiceyuan.retropreference.annotations;
 
 import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
@@ -13,6 +15,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * 如果有自己额外定义 key name 的需求，比如使用数字开头作为 key，可以使用该注解。
  */
 @Documented
+@Target(ElementType.METHOD)
 @Retention(RUNTIME)
 public @interface KeyName {
     String value();

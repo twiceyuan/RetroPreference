@@ -1,7 +1,9 @@
 package com.twiceyuan.retropreference.annotations;
 
 import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
@@ -12,6 +14,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  *
  * 你也可以使用该注解来单独指明 SP 的 file name
  */
+@Target(ElementType.TYPE)
 @Documented
 @Retention(RUNTIME)
 public @interface FileName {

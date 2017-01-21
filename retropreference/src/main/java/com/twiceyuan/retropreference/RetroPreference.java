@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 
 import com.twiceyuan.retropreference.annotations.FileName;
 import com.twiceyuan.retropreference.annotations.KeyName;
+import com.twiceyuan.retropreference.exceptions.FileNameError;
+import com.twiceyuan.retropreference.exceptions.KeyNameError;
 import com.twiceyuan.retropreference.typeHandler.BaseTypeHandler;
 import com.twiceyuan.retropreference.typeHandler.TypeHandlerFactory;
 
@@ -83,14 +85,14 @@ public class RetroPreference {
         }
 
         if (annotations.length != 1) {
-            throw new IllegalStateException("RetroPreference 的方法注解只能为 KeyName，而方法 " + method.getName() + " 中发现了不止一个注解");
+            throw new KeyNameError(method);
         }
 
         Annotation annotation = annotations[0];
         if (annotation instanceof KeyName) {
             return ((KeyName) annotation).value();
         } else {
-            throw new IllegalStateException("RetroPreference 的方法注解只能为 KeyName，而方法 " + method.getName() + " 发现了注解" + annotation.getClass().getName());
+            throw new KeyNameError(method, annotation);
         }
     }
 
@@ -108,14 +110,14 @@ public class RetroPreference {
         }
 
         if (annotations.length != 1) {
-            throw new IllegalStateException("RetroPreference 的接口注解只能为 FileName，而类 " + preferenceClass.getName() + " 中发现了不止一个注解");
+            throw new FileNameError(preferenceClass);
         }
 
         Annotation annotation = annotations[0];
         if (annotation instanceof FileName) {
             return ((FileName) annotation).value();
         } else {
-            throw new IllegalStateException("RetroPreference 的类注解只能为 FileName，而类 " + preferenceClass.getName() + " 发现了注解" + annotation.getClass().getName());
+            throw new FileNameError(preferenceClass, annotation);
         }
     }
 }
