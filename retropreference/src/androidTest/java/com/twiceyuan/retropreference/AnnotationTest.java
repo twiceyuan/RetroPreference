@@ -6,7 +6,6 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.twiceyuan.retropreference.preferences.AnnotationSettings;
-import com.twiceyuan.retropreference.preferences.Settings;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -39,15 +38,15 @@ public class AnnotationTest {
      */
     @Test
     public void testWriteWithSystemRead() {
-        mSettings.usernamePreference().set("twiceYuan");
+        mSettings.username().set("twiceYuan");
         SharedPreferences preferences = mAppContext.getSharedPreferences(
-                Settings.class.getSimpleName(),
+                RetroPreference.getFileName(AnnotationSettings.class),
                 Context.MODE_PRIVATE);
         String stored = preferences.getString("username", "");
         if (!stored.equals("twiceYuan")) {
             throw new AssertionError();
         }
-        mSettings.usernamePreference().clear();
+        mSettings.username().clear();
     }
 
     /**
@@ -60,9 +59,9 @@ public class AnnotationTest {
                 Context.MODE_PRIVATE);
         preferences.edit().putString("username", "twiceYuan").apply();
 
-        String storedUsername = mSettings.usernamePreference().get();
+        String storedUsername = mSettings.username().get();
         Assert.assertEquals("twiceYuan", storedUsername);
-        mSettings.usernamePreference().clear();
+        mSettings.username().clear();
     }
 
     /**
@@ -70,12 +69,12 @@ public class AnnotationTest {
      */
     @Test
     public void getWithDefault() {
-        String username = mSettings.usernamePreference().getWithDefault("Anonymous");
+        String username = mSettings.username().getWithDefault("Anonymous");
         Assert.assertEquals(username, "Anonymous");
-        mSettings.usernamePreference().set("twiceYuan");
-        username = mSettings.usernamePreference().getWithDefault("Anonymous");
+        mSettings.username().set("twiceYuan");
+        username = mSettings.username().getWithDefault("Anonymous");
         Assert.assertEquals(username, "twiceYuan");
-        mSettings.usernamePreference().clear();
+        mSettings.username().clear();
     }
 
     /**
@@ -127,9 +126,9 @@ public class AnnotationTest {
      */
     @Test
     public void testString() {
-        mSettings.usernamePreference().set("twiceYuan");
-        Assert.assertEquals("twiceYuan", mSettings.usernamePreference().get());
-        mSettings.usernamePreference().clear();
+        mSettings.username().set("twiceYuan");
+        Assert.assertEquals("twiceYuan", mSettings.username().get());
+        mSettings.username().clear();
     }
 
     /**

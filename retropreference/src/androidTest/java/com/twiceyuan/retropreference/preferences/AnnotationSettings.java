@@ -27,7 +27,7 @@ public interface AnnotationSettings {
     Preference<Long> lastLogin();
 
     @KeyName("username")
-    Preference<String> usernamePreference();
+    Preference<String> username();
 
     @KeyName("user_tags")
     Preference<Set<String>> userTags();
