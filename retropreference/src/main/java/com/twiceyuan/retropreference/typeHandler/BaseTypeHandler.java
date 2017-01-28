@@ -9,7 +9,7 @@ import android.content.SharedPreferences;
  */
 public abstract class BaseTypeHandler<Type> {
 
-    protected SharedPreferences mPreferences;
+    SharedPreferences mPreferences;
 
     public BaseTypeHandler(SharedPreferences preferences) {
         mPreferences = preferences;

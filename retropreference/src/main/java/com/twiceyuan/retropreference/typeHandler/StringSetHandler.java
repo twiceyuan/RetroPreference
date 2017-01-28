@@ -9,9 +9,9 @@ import java.util.Set;
  *
  * StringSet handler
  */
-public class StringSetHandler extends BaseTypeHandler<Set<String>> {
+class StringSetHandler extends BaseTypeHandler<Set<String>> {
 
-    public StringSetHandler(SharedPreferences preferences) {
+    StringSetHandler(SharedPreferences preferences) {
         super(preferences);
     }
 

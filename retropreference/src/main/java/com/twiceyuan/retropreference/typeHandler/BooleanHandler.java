@@ -7,9 +7,9 @@ import android.content.SharedPreferences;
  *
  * Boolean handler
  */
-public class BooleanHandler extends BaseTypeHandler<Boolean> {
+class BooleanHandler extends BaseTypeHandler<Boolean> {
 
-    public BooleanHandler(SharedPreferences preferences) {
+    BooleanHandler(SharedPreferences preferences) {
         super(preferences);
     }
 

@@ -7,9 +7,9 @@ import android.content.SharedPreferences;
  *
  * Float handler
  */
-public class FloatHandler extends BaseTypeHandler<Float> {
+class FloatHandler extends BaseTypeHandler<Float> {
 
-    public FloatHandler(SharedPreferences preferences) {
+    FloatHandler(SharedPreferences preferences) {
         super(preferences);
     }
 

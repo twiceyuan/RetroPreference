@@ -7,9 +7,9 @@ import android.content.SharedPreferences;
  *
  * String handler
  */
-public class StringHandler extends BaseTypeHandler<String> {
+class StringHandler extends BaseTypeHandler<String> {
 
-    public StringHandler(SharedPreferences preferences) {
+    StringHandler(SharedPreferences preferences) {
         super(preferences);
     }
 

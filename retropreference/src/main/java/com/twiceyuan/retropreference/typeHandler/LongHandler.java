@@ -7,9 +7,9 @@ import android.content.SharedPreferences;
  *
  * Long handler
  */
-public class LongHandler extends BaseTypeHandler<Long> {
+class LongHandler extends BaseTypeHandler<Long> {
 
-    public LongHandler(SharedPreferences preferences) {
+    LongHandler(SharedPreferences preferences) {
         super(preferences);
     }
 

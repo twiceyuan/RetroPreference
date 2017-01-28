@@ -7,9 +7,9 @@ import android.content.SharedPreferences;
  *
  * Integer handler
  */
-public class IntegerHandler extends BaseTypeHandler<Integer> {
+class IntegerHandler extends BaseTypeHandler<Integer> {
 
-    public IntegerHandler(SharedPreferences preferences) {
+    IntegerHandler(SharedPreferences preferences) {
         super(preferences);
     }
 
