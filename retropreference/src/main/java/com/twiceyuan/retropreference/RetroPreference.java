@@ -8,6 +8,7 @@ import com.twiceyuan.retropreference.annotations.KeyName;
 import com.twiceyuan.retropreference.annotations.PreferenceBuilder;
 import com.twiceyuan.retropreference.exceptions.FileNameError;
 import com.twiceyuan.retropreference.exceptions.KeyNameError;
+import com.twiceyuan.retropreference.typeHandler.AdvanceHandler;
 import com.twiceyuan.retropreference.typeHandler.BaseTypeHandler;
 import com.twiceyuan.retropreference.typeHandler.TypeHandlerFactory;
 
@@ -67,6 +68,14 @@ public class RetroPreference {
         });
         cachePreference.put(preferenceClass, proxy);
         return proxy;
+    }
+
+    public static void addUserDefinedHandler(AdvanceHandler<?> handler) {
+        TypeHandlerFactory.addUserDefinedHandler(handler);
+    }
+
+    public static void clearUserDefinedHandlers() {
+        TypeHandlerFactory.clearUserHandlers();
     }
 
     /**
