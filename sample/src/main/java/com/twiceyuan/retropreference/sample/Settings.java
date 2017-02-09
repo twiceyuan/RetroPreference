@@ -13,4 +13,9 @@ public interface Settings {
      * Mark launch count
      */
     Preference<Integer> launchCount();
+
+    /**
+     * Save current user instance
+     */
+    Preference<User> currentUser();
 }

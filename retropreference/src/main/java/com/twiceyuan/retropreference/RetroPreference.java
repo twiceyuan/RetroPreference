@@ -9,8 +9,10 @@ import com.twiceyuan.retropreference.annotations.PreferenceBuilder;
 import com.twiceyuan.retropreference.exceptions.FileNameError;
 import com.twiceyuan.retropreference.exceptions.KeyNameError;
 import com.twiceyuan.retropreference.typeHandler.BaseTypeHandler;
+import com.twiceyuan.retropreference.typeHandler.SerializableHandler;
 import com.twiceyuan.retropreference.typeHandler.TypeHandlerFactory;
 
+import java.io.Serializable;
 import java.lang.annotation.Annotation;
 import java.lang.ref.SoftReference;
 import java.lang.reflect.InvocationHandler;
@@ -31,7 +33,7 @@ public class RetroPreference {
     private static SoftReference<Map<Class, Object>> mPreferenceCache;
     private static boolean sEnableCache = true;
 
-    public static <T> T create(Context context, final Class<T> preferenceClass, int mode) {
+    public static <T> T create(final Context context, final Class<T> preferenceClass, int mode) {
 
         Map<Class, Object> cachePreference = getPreferenceCache();
         Object cached = cachePreference.get(preferenceClass);
@@ -55,10 +57,19 @@ public class RetroPreference {
                 final Type returnType = method.getGenericReturnType();
                 // checked
                 Type preferenceType = Utils.getParameterUpperBound(0, (ParameterizedType) returnType);
-                final BaseTypeHandler handler = TypeHandlerFactory.build(preferences, preferenceType);
+                BaseTypeHandler handler = TypeHandlerFactory.build(preferences, preferenceType);
+
+                if (handler == null && isSerilizable(preferenceType)) {
+                    handler = new SerializableHandler(preferences,
+                            getFileName(preferenceClass),
+                            context);
+                }
+
+                // if handler is still null
                 if (handler == null) {
                     throw new IllegalStateException("SharedPreferences does not support this type: " + preferenceType.toString());
                 }
+
                 return new PreferenceBuilder()
                         .setKey(key)
                         .setTypeHandler(handler)
@@ -67,6 +78,17 @@ public class RetroPreference {
         });
         cachePreference.put(preferenceClass, proxy);
         return proxy;
+    }
+
+    private static boolean isSerilizable(Type type) {
+        Class[] interfaces = ((Class) type).getInterfaces();
+        if (interfaces == null || interfaces.length == 0) return false;
+        for (Class implInterface : interfaces) {
+            if (implInterface == Serializable.class) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
