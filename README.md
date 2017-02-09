@@ -68,7 +68,7 @@ dependencies {
 }
 ```
 
-[1]: 仅在注解时有效，后续会添加自定义混淆规则的选项。或者在 proguard 文件中 keep 相关的 SharedPreferences 定义项。
+[1]: 仅在注解时有效，后续会添加自定义混淆规则的选项。或者在proguard文件中keep相关的SharedPreferences定义项。
 
 ## License
 
