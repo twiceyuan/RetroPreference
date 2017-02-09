@@ -59,7 +59,7 @@ public class RetroPreference {
                 Type preferenceType = Utils.getParameterUpperBound(0, (ParameterizedType) returnType);
                 BaseTypeHandler handler = TypeHandlerFactory.build(preferences, preferenceType);
 
-                if (handler == null && isSerilizable(preferenceType)) {
+                if (handler == null && isSerializable(preferenceType)) {
                     handler = new SerializableHandler(preferences,
                             getFileName(preferenceClass),
                             context);
@@ -80,7 +80,7 @@ public class RetroPreference {
         return proxy;
     }
 
-    private static boolean isSerilizable(Type type) {
+    private static boolean isSerializable(Type type) {
         Class[] interfaces = ((Class) type).getInterfaces();
         if (interfaces == null || interfaces.length == 0) return false;
         for (Class implInterface : interfaces) {
