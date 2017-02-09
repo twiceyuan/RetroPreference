@@ -8,7 +8,8 @@ SharedPreferences wrapper inspired by Retrofit，类型安全的 SharedPreferenc
 * [x] Type Safe
 * [x] Key 强一致
 * [x] 混淆代码同时也会混淆 SharedPreferences 的文件 name 和 key name，并且不影响使用
-* [ ] 代理类实例的缓存
+* [x] 代理类实例的缓存
+* [x] Serializable 对象存储
 * [ ] 代理类定义合法性预检查
 
 ### Sample Code
