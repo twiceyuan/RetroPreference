@@ -17,6 +17,8 @@ import java.io.ObjectOutputStream;
  */
 public class SerializableHandler extends BaseTypeHandler<Object> {
 
+    private static final String SERIALIZABLE_FILE_PREFIX = "RetroPreference_";
+
     private Context mContext;
     private String  mPreferencesName;
 
@@ -58,7 +60,7 @@ public class SerializableHandler extends BaseTypeHandler<Object> {
     }
 
     private File getObjectFile(String key) {
-        File dir = mContext.getDir(mPreferencesName, Context.MODE_PRIVATE);
+        File dir = mContext.getDir(SERIALIZABLE_FILE_PREFIX + mPreferencesName, Context.MODE_PRIVATE);
         if (!dir.exists()) {
             if (!dir.mkdirs()) {
                 return null;
