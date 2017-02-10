@@ -46,12 +46,16 @@ public class RetroPreference {
         final SharedPreferences preferences = context.getSharedPreferences(preferenceName, mode);
 
         ClassLoader loader = preferenceClass.getClassLoader();
-        Class<?> implementClassed[] = new Class[]{preferenceClass};
+        final Class<?> implementClassed[] = new Class[]{preferenceClass};
 
         //noinspection unchecked
         T proxy = (T) Proxy.newProxyInstance(loader, implementClassed, new InvocationHandler() {
             @Override
             public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+
+                if (proxy instanceof Clearable && handleClearMethod(preferences, method)) {
+                    return null;
+                }
 
                 final String key = getKeyNameFromMethod(method);
                 final Type returnType = method.getGenericReturnType();
@@ -89,6 +93,17 @@ public class RetroPreference {
             }
         }
         return false;
+    }
+
+    private static boolean handleClearMethod(SharedPreferences preferences, Method method) {
+        if (method.getDeclaringClass() == Clearable.class) {
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.clear();
+            editor.apply();
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
