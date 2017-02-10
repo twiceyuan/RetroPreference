@@ -17,9 +17,10 @@ SharedPreferences wrapper inspired by Retrofit，类型安全的 SharedPreferenc
 Define:
 
 ```java
-public interface Settings {
+// 需要调用 clear 方法清空 sp 的话可以继承 Clearable 接口
+public interface Settings extends Clearable {
 
-    Preference<Integer> launche_count();
+    Preference<Integer> launch_count();
 
     Preference<Boolean> is_login();
 
