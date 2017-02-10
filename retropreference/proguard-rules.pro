@@ -15,3 +15,5 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+-printmapping ./keep_mappings.txt
+-applymapping ./keep_mappings.txt
