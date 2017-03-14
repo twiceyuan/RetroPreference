@@ -66,7 +66,8 @@ public class RetroPreference {
                 if (handler == null && isSerializable(preferenceType)) {
                     handler = new SerializableHandler(preferences,
                             getFileName(preferenceClass),
-                            context);
+                            context,
+                            preferenceType);
                 }
 
                 // if handler is still null

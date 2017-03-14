@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.Type;
 
 /**
  * Created by twiceYuan on 09/02/2017.
@@ -21,11 +22,16 @@ public class SerializableHandler extends BaseTypeHandler<Object> {
 
     private Context mContext;
     private String  mPreferencesName;
+    private Type    mObjectType;
 
-    public SerializableHandler(SharedPreferences preferences, String preferencesName, Context context) {
+    public SerializableHandler(SharedPreferences preferences,
+                               String preferencesName,
+                               Context context,
+                               Type objectType) {
         super(preferences);
         mPreferencesName = preferencesName;
         mContext = context;
+        mObjectType = objectType;
     }
 
     /**
@@ -52,7 +58,8 @@ public class SerializableHandler extends BaseTypeHandler<Object> {
         try {
             FileInputStream fileInput = new FileInputStream(objectFile);
             ObjectInputStream objectInput = new ObjectInputStream(fileInput);
-            return objectInput.readObject();
+            Object o = objectInput.readObject();
+            return ((Class) mObjectType).cast(o);
         } catch (Exception e) {
             e.printStackTrace();
             return defaultValue;

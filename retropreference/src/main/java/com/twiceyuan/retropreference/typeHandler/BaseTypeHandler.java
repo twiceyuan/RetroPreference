@@ -17,7 +17,7 @@ public abstract class BaseTypeHandler<Type> {
 
     public abstract void setValue(String key, Type value);
 
-    public abstract Type get(String key, Type defaultValue);
+    public abstract Type get(String key, Type defaultValue) throws ClassCastException;
 
     public Type defaultValue() {
         return null;

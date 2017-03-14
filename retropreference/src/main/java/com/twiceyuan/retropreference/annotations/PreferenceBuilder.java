@@ -33,14 +33,22 @@ public class PreferenceBuilder {
 
             @Override
             public Object get() {
-                //noinspection unchecked
-                return mTypeHandler.get(mKey, mTypeHandler.defaultValue());
+                try {
+                    //noinspection unchecked
+                    return mTypeHandler.get(mKey, mTypeHandler.defaultValue());
+                } catch (ClassCastException e) {
+                    return mTypeHandler.defaultValue();
+                }
             }
 
             @Override
             public Object getWithDefault(Object defaultValue) {
-                //noinspection unchecked
-                return mTypeHandler.get(mKey, defaultValue);
+                try {
+                    //noinspection unchecked
+                    return mTypeHandler.get(mKey, defaultValue);
+                } catch (ClassCastException e) {
+                    return defaultValue;
+                }
             }
 
             @Override
