@@ -23,6 +23,8 @@ import java.lang.reflect.Type;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static com.twiceyuan.retropreference.UtilsKt.getParameterUpperBound;
+
 /**
  * Created by twiceYuan on 20/01/2017.
  * <p>
@@ -60,8 +62,8 @@ public class RetroPreference {
                 final String key = getKeyNameFromMethod(method);
                 final Type returnType = method.getGenericReturnType();
                 // checked
-                Type preferenceType = Utils.getParameterUpperBound(0, (ParameterizedType) returnType);
-                BaseTypeHandler handler = TypeHandlerFactory.build(preferences, preferenceType);
+                Type preferenceType = getParameterUpperBound(0, (ParameterizedType) returnType);
+                BaseTypeHandler handler = TypeHandlerFactory.INSTANCE.build(preferences, preferenceType);
 
                 if (handler == null && isSerializable(preferenceType)) {
                     handler = new SerializableHandler(preferences,
