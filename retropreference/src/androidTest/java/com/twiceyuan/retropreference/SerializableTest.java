@@ -33,7 +33,7 @@ public class SerializableTest {
         originUser.age = 99;
         originUser.score = 1203910;
 
-        SerializableSettings settings = RetroPreference.create(
+        SerializableSettings settings = RetroPreference.INSTANCE.create(
                 mAppContext,
                 SerializableSettings.class,
                 Context.MODE_PRIVATE);

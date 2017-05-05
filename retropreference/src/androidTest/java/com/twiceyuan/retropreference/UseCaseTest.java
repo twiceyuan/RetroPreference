@@ -29,7 +29,7 @@ public class UseCaseTest {
     public void useAppContext() throws Exception {
         // Context of the app under test.
         mAppContext = InstrumentationRegistry.getTargetContext();
-        mSettings = RetroPreference.create(mAppContext, Settings.class, Context.MODE_PRIVATE);
+        mSettings = RetroPreference.INSTANCE.create(mAppContext, Settings.class, Context.MODE_PRIVATE);
     }
 
     /**

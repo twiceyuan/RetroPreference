@@ -33,7 +33,7 @@ public class IllegalDefineTest {
     @Test
     public void illegalFileName() {
         try {
-            RetroPreference.create(mAppContext, IllegalFileName.class, Context.MODE_PRIVATE);
+            RetroPreference.INSTANCE.create(mAppContext, IllegalFileName.class, Context.MODE_PRIVATE);
         } catch (Exception e) {
             Assert.assertTrue(e instanceof FileNameError);
         }
@@ -42,7 +42,7 @@ public class IllegalDefineTest {
     @Test
     public void illegalKeyName() {
         try {
-            IllegalKeyName settings = RetroPreference.create(mAppContext, IllegalKeyName.class, Context.MODE_PRIVATE);
+            IllegalKeyName settings = RetroPreference.INSTANCE.create(mAppContext, IllegalKeyName.class, Context.MODE_PRIVATE);
             settings.helloString();
         } catch (Exception e) {
             Assert.assertTrue(e instanceof KeyNameError);

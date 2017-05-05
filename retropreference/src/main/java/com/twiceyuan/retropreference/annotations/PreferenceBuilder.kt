@@ -9,47 +9,32 @@ import com.twiceyuan.retropreference.typeHandler.BaseTypeHandler
  *
  * Preference 项建造器
  */
-class PreferenceBuilder {
-
-    private var mKey: String? = null
-    private var mTypeHandler: BaseTypeHandler<Any>? = null
-
-    fun setKey(key: String): PreferenceBuilder {
-        this.mKey = key
-        return this
-    }
-
-    fun setTypeHandler(typeHandler: BaseTypeHandler<Any>): PreferenceBuilder {
-        mTypeHandler = typeHandler
-        return this
-    }
+class PreferenceBuilder(val key: String, val typeHandler: BaseTypeHandler<Any>) {
 
     fun build(): Preference<Any> {
         return object : Preference<Any> {
             override fun set(t: Any?) {
-                mTypeHandler!!.setValue(mKey!!, t)
+                typeHandler.setValue(key, t)
             }
 
             override fun get(): Any? {
                 try {
-                    return mTypeHandler!![mKey!!, mTypeHandler!!.defaultValue()]
+                    return typeHandler[key, typeHandler.defaultValue()]
                 } catch (e: ClassCastException) {
-                    return mTypeHandler!!.defaultValue()
+                    return typeHandler.defaultValue()
                 }
             }
 
             override fun getWithDefault(defaultValue: Any): Any? {
                 try {
-
-                    return mTypeHandler!![mKey!!, defaultValue]
+                    return typeHandler[key, defaultValue]
                 } catch (e: ClassCastException) {
                     return defaultValue
                 }
-
             }
 
             override fun clear() {
-                mTypeHandler!!.clear(mKey!!)
+                typeHandler.clear(key)
             }
         }
     }

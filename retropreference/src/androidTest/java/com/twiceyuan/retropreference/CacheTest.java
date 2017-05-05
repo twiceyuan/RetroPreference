@@ -28,17 +28,17 @@ public class CacheTest {
 
     @Test
     public void testNoCached() {
-        RetroPreference.setEnableCache(false);
+        RetroPreference.INSTANCE.setEnableCache(false);
         for (int i = 0; i < 10000; i++) {
-            RetroPreference.create(mAppContext, Settings.class, Context.MODE_PRIVATE);
+            RetroPreference.INSTANCE.create(mAppContext, Settings.class, Context.MODE_PRIVATE);
         }
     }
 
     @Test
     public void testCached() {
-        RetroPreference.setEnableCache(true);
+        RetroPreference.INSTANCE.setEnableCache(true);
         for (int i = 0; i < 10000; i++) {
-            RetroPreference.create(mAppContext, Settings.class, Context.MODE_PRIVATE);
+            RetroPreference.INSTANCE.create(mAppContext, Settings.class, Context.MODE_PRIVATE);
         }
     }
 }

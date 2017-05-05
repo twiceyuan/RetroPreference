@@ -23,8 +23,12 @@ class MainActivity : AppCompatActivity() {
 
         (findViewById(R.id.tv_launch) as TextView).text = String.format("启动次数：%s", count)
 
-        // set the preference value
-        launchCount.set(if (count != null) count + 1 else 1)
+        if (count != null) {
+            // set the preference value
+            launchCount.set(count.plus(1))
+        } else {
+            launchCount.set(1)
+        }
 
         // Object store
         val userPreference = settings.currentUser()
