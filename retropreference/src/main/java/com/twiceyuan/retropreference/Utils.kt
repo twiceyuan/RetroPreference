@@ -16,8 +16,7 @@ import java.lang.reflect.WildcardType
 fun getParameterUpperBound(index: Int, type: ParameterizedType): Type {
     val types = type.actualTypeArguments
     if (index < 0 || index >= types.size) {
-        throw IllegalArgumentException(
-                "Index " + index + " not in range [0," + types.size + ") for " + type)
+        throw IllegalArgumentException("Index " + index + " not in range [0," + types.size + ") for " + type)
     }
     val paramType = types[index]
     if (paramType is WildcardType) {

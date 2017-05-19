@@ -1,5 +1,6 @@
 package com.twiceyuan.retropreference.javasample;
 
+import com.twiceyuan.retropreference.Clearable;
 import com.twiceyuan.retropreference.Preference;
 
 /**
@@ -7,8 +8,7 @@ import com.twiceyuan.retropreference.Preference;
  *
  * Settings
  */
-public interface Settings {
-
+public interface Settings extends Clearable {
 
     /**
      * Mark launch count

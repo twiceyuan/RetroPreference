@@ -25,9 +25,9 @@ class PreferenceBuilder(val key: String, val typeHandler: BaseTypeHandler<Any>) 
                 }
             }
 
-            override fun getWithDefault(defaultValue: Any): Any? {
+            override fun getWithDefault(defaultValue: Any): Any {
                 try {
-                    return typeHandler[key, defaultValue]
+                    return typeHandler[key, defaultValue] ?: defaultValue
                 } catch (e: ClassCastException) {
                     return defaultValue
                 }

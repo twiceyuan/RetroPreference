@@ -15,7 +15,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         // Create preference proxy by RetroPreference.create();
         Settings settings = RetroPreference.INSTANCE.create(this, Settings.class, Context.MODE_PRIVATE);
 
@@ -23,32 +22,26 @@ public class MainActivity extends AppCompatActivity {
         Preference<Integer> launchCount = settings.launchCount();
 
         // getWithDefault the preference value
-        Integer count = launchCount.getWithDefault(0);
+        Integer count = launchCount.getWithDefault(1);
 
-        ((TextView)findViewById(R.id.tv_launch)).setText(String.format("启动次数：%s", count));
+        ((TextView) findViewById(R.id.tv_launch)).setText(String.format("启动次数：%s", count));
 
-        if (count != null) {
-            // set the preference value
-            launchCount.set(count + 1);
-        } else {
-            launchCount.set(1);
-        }
+        // set the preference value
+        launchCount.set(count + 1);
 
         // Object store
         Preference<User> userPreference = settings.currentUser();
-        User currentUser = userPreference.get();
-        if (currentUser != null) {
-            currentUser.age++;
-            currentUser.score -= 0.1f;
-            ((TextView) findViewById(R.id.tv_user)).setText(String.format("当前用户：\n%s", currentUser.toString()));
-        } else {
-            User user = new User();
-            user.username = "twiceYuan";
-            user.password = "123456";
-            user.age = 0;
-            user.score = 1000f;
-            currentUser = user;
-        }
+        User currentUser = userPreference.getWithDefault(new User() {{
+            username = "twiceYuan";
+            password = "123456";
+            age = 0;
+            score = 1000f;
+        }});
+
+        currentUser.age++;
+        currentUser.score -= 0.1f;
+        ((TextView) findViewById(R.id.tv_user)).setText(String.format("当前用户：\n%s", currentUser.toString()));
+
         userPreference.set(currentUser);
     }
 }
