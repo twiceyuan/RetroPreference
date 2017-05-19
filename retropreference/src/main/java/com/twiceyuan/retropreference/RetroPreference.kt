@@ -11,7 +11,6 @@ import com.twiceyuan.retropreference.typeHandler.BaseTypeHandler
 import com.twiceyuan.retropreference.typeHandler.SerializableHandler
 import com.twiceyuan.retropreference.typeHandler.TypeHandlerFactory
 import java.io.Serializable
-import java.lang.ref.SoftReference
 import java.lang.reflect.*
 import java.util.concurrent.ConcurrentHashMap
 
@@ -23,10 +22,15 @@ import java.util.concurrent.ConcurrentHashMap
  */
 object RetroPreference {
 
-    private var mPreferenceCache: SoftReference<MutableMap<Class<*>, Any>>? = null
+    private var mPreferenceCache: MutableMap<Class<*>, Any>? = null
     private var sEnableCache = true
 
+    @JvmStatic
     fun <T> create(context: Context, preferenceClass: Class<T>, mode: Int): T {
+        return createKt(context, preferenceClass, mode)
+    }
+
+    fun <T> createKt(context: Context, preferenceClass: Class<T>, mode: Int): T {
 
         val cachePreference: MutableMap<Class<*>, Any>? = preferenceCache
         val cached = cachePreference?.get(preferenceClass)
@@ -62,14 +66,16 @@ object RetroPreference {
             }
 
             // if handler is still null
-            if (handler == null) {
-                throw IllegalStateException("SharedPreferences does not support this type: " + preferenceType.toString())
+            when (handler) {
+                null -> {
+                    val message = "SharedPreferences does not support this type: " + preferenceType.toString()
+                    throw IllegalStateException(message)
+                }
+                else -> PreferenceBuilder(key, handler).build()
             }
-
-            PreferenceBuilder(key, handler).build()
         }) as T
 
-        if (proxy != null) {
+        proxy?.apply {
             cachePreference?.put(preferenceClass, proxy)
         }
 
@@ -84,9 +90,7 @@ object RetroPreference {
 
     private fun handleClearMethod(preferences: SharedPreferences, method: Method): Boolean {
         if (method.declaringClass == Clearable::class.java) {
-            val editor = preferences.edit()
-            editor.clear()
-            editor.apply()
+            preferences.edit().clear().apply()
             return true
         } else {
             return false
@@ -145,10 +149,10 @@ object RetroPreference {
 
     private val preferenceCache: MutableMap<Class<*>, Any>?
         get() {
-            if (mPreferenceCache == null || mPreferenceCache!!.get() == null) {
-                mPreferenceCache = SoftReference<MutableMap<Class<*>, Any>>(ConcurrentHashMap<Class<*>, Any>())
+            if (mPreferenceCache == null) {
+                mPreferenceCache = ConcurrentHashMap<Class<*>, Any>()
             }
-            return mPreferenceCache?.get()
+            return mPreferenceCache
         }
 
     fun setEnableCache(enableCache: Boolean) {

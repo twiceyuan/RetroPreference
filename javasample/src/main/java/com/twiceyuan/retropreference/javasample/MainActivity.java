@@ -15,8 +15,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Create preference proxy by RetroPreference.create();
-        Settings settings = RetroPreference.INSTANCE.create(this, Settings.class, Context.MODE_PRIVATE);
+        // Create preference proxy by RetroPreference.createKt();
+        Settings settings = RetroPreference.create(this, Settings.class, Context.MODE_PRIVATE);
 
         // Get preference item holder
         Preference<Integer> launchCount = settings.launchCount();
@@ -31,15 +31,12 @@ public class MainActivity extends AppCompatActivity {
 
         // Object store
         Preference<User> userPreference = settings.currentUser();
-        User currentUser = userPreference.getWithDefault(new User() {{
-            username = "twiceYuan";
-            password = "123456";
-            age = 0;
-            score = 1000f;
-        }});
+
+        User currentUser = userPreference.getWithDefault(new User("twiceYuan", "123456", 0f, 1000));
 
         currentUser.age++;
         currentUser.score -= 0.1f;
+
         ((TextView) findViewById(R.id.tv_user)).setText(String.format("当前用户：\n%s", currentUser.toString()));
 
         userPreference.set(currentUser);

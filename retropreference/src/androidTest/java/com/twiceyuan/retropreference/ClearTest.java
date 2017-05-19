@@ -26,7 +26,7 @@ public class ClearTest {
 
     @Test
     public void testClear() {
-        ClearablePreference preference = RetroPreference.INSTANCE.create(
+        ClearablePreference preference = RetroPreference.INSTANCE.createKt(
                 mAppContext,
                 ClearablePreference.class,
                 Context.MODE_PRIVATE);

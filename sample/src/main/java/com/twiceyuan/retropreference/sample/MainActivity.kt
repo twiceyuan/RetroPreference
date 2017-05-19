@@ -12,8 +12,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Create preference proxy by RetroPreference.create();
-        val settings = RetroPreference.create(this, Settings::class.java, Context.MODE_PRIVATE)
+        // Create preference proxy by RetroPreference.createKt();
+        val settings = RetroPreference.createKt(this, Settings::class.java, Context.MODE_PRIVATE)
 
         // Get preference item holder
         val launchCount = settings.launchCount()

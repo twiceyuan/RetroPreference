@@ -10,6 +10,13 @@ import java.io.Serializable;
  */
 class User implements Serializable {
 
+    public User(String username, String password, Float score, Integer age) {
+        this.username = username;
+        this.password = password;
+        this.score = score;
+        this.age = age;
+    }
+
     String  username;
     String  password;
     Float   score;

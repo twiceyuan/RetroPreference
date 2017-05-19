@@ -38,7 +38,7 @@ Save or read:
 
 ```java
 // 建议在 Application onCreate 时创建唯一实例。
-mSettings = RetroPreference.create(appContext, Settings.class, Context.MODE_PRIVATE);
+mSettings = RetroPreference.createKt(appContext, Settings.class, Context.MODE_PRIVATE);
 // 保存启动次数
 mSettings.launche_count().set(7);
 // 获得存储的值

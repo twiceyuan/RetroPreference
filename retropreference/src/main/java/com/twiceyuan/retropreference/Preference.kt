@@ -10,6 +10,8 @@ import org.jetbrains.annotations.NotNull
 interface Preference<T> {
     fun set(t: T?)
     fun get(): T?
+
+    @NotNull
     fun getWithDefault(@NotNull defaultValue: T): T
     fun clear()
 }

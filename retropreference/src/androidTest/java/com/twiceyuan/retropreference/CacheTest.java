@@ -30,7 +30,7 @@ public class CacheTest {
     public void testNoCached() {
         RetroPreference.INSTANCE.setEnableCache(false);
         for (int i = 0; i < 10000; i++) {
-            RetroPreference.INSTANCE.create(mAppContext, Settings.class, Context.MODE_PRIVATE);
+            RetroPreference.INSTANCE.createKt(mAppContext, Settings.class, Context.MODE_PRIVATE);
         }
     }
 
@@ -38,7 +38,7 @@ public class CacheTest {
     public void testCached() {
         RetroPreference.INSTANCE.setEnableCache(true);
         for (int i = 0; i < 10000; i++) {
-            RetroPreference.INSTANCE.create(mAppContext, Settings.class, Context.MODE_PRIVATE);
+            RetroPreference.INSTANCE.createKt(mAppContext, Settings.class, Context.MODE_PRIVATE);
         }
     }
 }
