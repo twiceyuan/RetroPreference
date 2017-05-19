@@ -1,1 +1,1 @@
-include ':sample', ':retropreference'
+include ':sample', ':retropreference', ':javasample'
