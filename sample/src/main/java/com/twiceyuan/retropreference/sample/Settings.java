@@ -1,5 +1,6 @@
 package com.twiceyuan.retropreference.sample;
 
+import com.twiceyuan.retropreference.Clearable;
 import com.twiceyuan.retropreference.Preference;
 
 /**
@@ -7,7 +8,7 @@ import com.twiceyuan.retropreference.Preference;
  *
  * Mock Settings
  */
-public interface Settings {
+public interface Settings extends Clearable {
 
     /**
      * Mark launch count

@@ -8,20 +8,20 @@ import com.twiceyuan.retropreference.annotations.KeyName;
 import com.twiceyuan.retropreference.annotations.PreferenceBuilder;
 import com.twiceyuan.retropreference.exceptions.FileNameError;
 import com.twiceyuan.retropreference.exceptions.KeyNameError;
+import com.twiceyuan.retropreference.exceptions.PreferenceNotCreateException;
 import com.twiceyuan.retropreference.typeHandler.BaseTypeHandler;
 import com.twiceyuan.retropreference.typeHandler.SerializableHandler;
 import com.twiceyuan.retropreference.typeHandler.TypeHandlerFactory;
 
 import java.io.Serializable;
 import java.lang.annotation.Annotation;
-import java.lang.ref.SoftReference;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Proxy;
 import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by twiceYuan on 20/01/2017.
@@ -30,8 +30,11 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class RetroPreference {
 
-    private static SoftReference<Map<Class, Object>> mPreferenceCache;
+    private static Map<Class, Object> mPreferenceCache;
+
     private static boolean sEnableCache = true;
+
+    private static Class sDefaultPreferenceClass = null;
 
     public static <T> T create(final Context context, final Class<T> preferenceClass, int mode) {
 
@@ -156,11 +159,40 @@ public class RetroPreference {
         }
     }
 
-    private static Map<Class, Object> getPreferenceCache() {
-        if (mPreferenceCache == null || mPreferenceCache.get() == null) {
-            mPreferenceCache = new SoftReference<Map<Class, Object>>(new ConcurrentHashMap<Class, Object>());
+    private synchronized static Map<Class, Object> getPreferenceCache() {
+        if (mPreferenceCache == null) {
+            mPreferenceCache = new HashMap<>();
         }
-        return mPreferenceCache.get();
+        return mPreferenceCache;
+    }
+
+    public static <T> T getCache(Class<T> preferenceClass) {
+        Object preferenceObject = getPreferenceCache().get(preferenceClass);
+        if (preferenceObject == null) {
+            throw new PreferenceNotCreateException(preferenceClass);
+        }
+        //noinspection unchecked
+        return (T) preferenceObject;
+    }
+
+    public static void initDefaultPreference(Context context, Class preferenceClass, int mode) {
+        create(context, preferenceClass, mode);
+        sDefaultPreferenceClass = preferenceClass;
+    }
+
+    public static <T> T getDefault() {
+
+        if (sDefaultPreferenceClass == null) {
+            throw new RuntimeException("使用 getDefault() 前请先调用 setDefaultPreference 进行初始化");
+        }
+
+        Object defaultCache = getCache(sDefaultPreferenceClass);
+        try {
+            //noinspection unchecked
+            return (T) defaultCache;
+        } catch (ClassCastException e) {
+            throw new RuntimeException("获取的类型与期望类型不匹配，请确认 setDefaultPreference 传入的类型");
+        }
     }
 
     static void setEnableCache(boolean enableCache) {

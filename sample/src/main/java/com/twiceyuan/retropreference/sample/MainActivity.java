@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Create preference proxy by RetroPreference.create();
-        Settings settings = RetroPreference.create(this, Settings.class, MODE_PRIVATE);
+        Settings settings = RetroPreference.getDefault();
 
         // Get preference item holder
         Preference<Integer> launchCount = settings.launchCount();
