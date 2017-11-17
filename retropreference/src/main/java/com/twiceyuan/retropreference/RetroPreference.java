@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import com.twiceyuan.retropreference.annotations.FileName;
 import com.twiceyuan.retropreference.annotations.KeyName;
 import com.twiceyuan.retropreference.annotations.PreferenceBuilder;
-import com.twiceyuan.retropreference.exceptions.FileNameError;
 import com.twiceyuan.retropreference.exceptions.KeyNameError;
 import com.twiceyuan.retropreference.exceptions.PreferenceNotCreateException;
 import com.twiceyuan.retropreference.typeHandler.BaseTypeHandler;
@@ -147,16 +146,13 @@ public class RetroPreference {
             return preferenceClass.getSimpleName();
         }
 
-        if (annotations.length != 1) {
-            throw new FileNameError(preferenceClass);
+        for (Annotation annotation : annotations) {
+            if (annotation instanceof FileName) {
+                return ((FileName) annotation).value();
+            }
         }
 
-        Annotation annotation = annotations[0];
-        if (annotation instanceof FileName) {
-            return ((FileName) annotation).value();
-        } else {
-            throw new FileNameError(preferenceClass, annotation);
-        }
+        return preferenceClass.getSimpleName();
     }
 
     private synchronized static Map<Class, Object> getPreferenceCache() {

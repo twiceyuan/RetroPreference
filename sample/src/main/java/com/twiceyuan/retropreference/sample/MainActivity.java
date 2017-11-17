@@ -24,7 +24,8 @@ public class MainActivity extends AppCompatActivity {
         Integer count = launchCount.getWithDefault(/*defaultValue = */0);
 
         count++;
-        ((TextView) findViewById(R.id.tv_launch)).setText(String.format("启动次数：%s", count));
+        TextView tvLaunch = (TextView) findViewById(R.id.tv_launch);
+        tvLaunch.setText(String.format("启动次数：%s", count));
 
         // set the preference value
         launchCount.set(count);
@@ -35,7 +36,8 @@ public class MainActivity extends AppCompatActivity {
         if (currentUser != null) {
             currentUser.age++;
             currentUser.score -= 0.1;
-            ((TextView) findViewById(R.id.tv_user)).setText(String.format("当前用户：\n%s", currentUser.toString()));
+            TextView tvUser = (TextView) findViewById(R.id.tv_user);
+            tvUser.setText(String.format("当前用户：\n%s", currentUser.toString()));
         } else {
             currentUser = new User();
             currentUser.username = "twiceYuan";
