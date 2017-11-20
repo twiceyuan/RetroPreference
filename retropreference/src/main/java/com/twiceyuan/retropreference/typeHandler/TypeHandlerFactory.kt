@@ -12,35 +12,39 @@ import java.lang.reflect.Type
  */
 object TypeHandlerFactory {
 
-    fun build(preferences: SharedPreferences, type: Type): BaseTypeHandler<Any>? {
-        if (type == Int::class.java || type === Integer::class.java || type === Int::class || type === Integer::class) {
-            @Suppress("UNCHECKED_CAST")
-            return IntegerHandler(preferences) as BaseTypeHandler<Any>
+    @Suppress("UNCHECKED_CAST")
+    fun build(preferences: SharedPreferences, type: Type): BaseTypeHandler<Any>? = when (type) {
+
+        Int::class.java, Integer::class.java, Int::class, Integer::class -> {
+            IntegerHandler(preferences) as BaseTypeHandler<Any>
         }
-        if (type === Boolean::class.java || type === java.lang.Boolean::class.java) {
-            @Suppress("UNCHECKED_CAST")
-            return BooleanHandler(preferences) as BaseTypeHandler<Any>
+
+        Boolean::class.java, java.lang.Boolean::class.java -> {
+            BooleanHandler(preferences) as BaseTypeHandler<Any>
         }
-        if (type === Long::class.java || type === java.lang.Long::class.java) {
-            @Suppress("UNCHECKED_CAST")
-            return LongHandler(preferences) as BaseTypeHandler<Any>
+
+        Long::class.java, java.lang.Long::class.java -> {
+            LongHandler(preferences) as BaseTypeHandler<Any>
         }
-        if (type === Float::class.java || type === java.lang.Float::class.java) {
-            @Suppress("UNCHECKED_CAST")
-            return FloatHandler(preferences) as BaseTypeHandler<Any>
+
+        Float::class.java, java.lang.Float::class.java -> {
+            FloatHandler(preferences) as BaseTypeHandler<Any>
         }
-        if (type === String::class.java || type === java.lang.String::class.java) {
-            @Suppress("UNCHECKED_CAST")
-            return StringHandler(preferences) as BaseTypeHandler<Any>
+
+        String::class.java, java.lang.String::class.java -> {
+            StringHandler(preferences) as BaseTypeHandler<Any>
         }
-        if (type is ParameterizedType) {
+
+        is ParameterizedType -> {
             val rawType = type.rawType as Class<*>
             val genericType = getParameterUpperBound(0, type) as Class<*>
-            @Suppress("UNCHECKED_CAST")
+
             if (rawType == Set::class.java && genericType == String::class.java) {
-                return StringSetHandler(preferences) as BaseTypeHandler<Any>
+                StringSetHandler(preferences) as BaseTypeHandler<Any>
+            } else {
+                null
             }
         }
-        return null
+        else -> null
     }
 }

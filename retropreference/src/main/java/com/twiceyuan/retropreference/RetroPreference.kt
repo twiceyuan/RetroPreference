@@ -5,7 +5,6 @@ import android.content.SharedPreferences
 import com.twiceyuan.retropreference.annotations.FileName
 import com.twiceyuan.retropreference.annotations.KeyName
 import com.twiceyuan.retropreference.annotations.PreferenceBuilder
-import com.twiceyuan.retropreference.exceptions.FileNameError
 import com.twiceyuan.retropreference.exceptions.KeyNameError
 import com.twiceyuan.retropreference.typeHandler.BaseTypeHandler
 import com.twiceyuan.retropreference.typeHandler.SerializableHandler
@@ -22,13 +21,12 @@ import java.util.concurrent.ConcurrentHashMap
  */
 object RetroPreference {
 
-    private var mPreferenceCache: MutableMap<Class<*>, Any>? = null
     private var sEnableCache = true
 
+    private val preferenceCache: MutableMap<Class<*>, Any> = ConcurrentHashMap()
+
     @JvmStatic
-    fun <T> create(context: Context, preferenceClass: Class<T>, mode: Int): T {
-        return createKt(context, preferenceClass, mode)
-    }
+    fun <T> create(context: Context, preferenceClass: Class<T>, mode: Int): T = createKt(context, preferenceClass, mode)
 
     fun <T> createKt(context: Context, preferenceClass: Class<T>, mode: Int): T {
 
@@ -59,10 +57,7 @@ object RetroPreference {
             var handler: BaseTypeHandler<Any>? = TypeHandlerFactory.build(preferences, preferenceType)
 
             if (handler == null && isSerializable(preferenceType)) {
-                handler = SerializableHandler(preferences,
-                        getFileName(preferenceClass),
-                        context,
-                        preferenceType)
+                handler = SerializableHandler(preferences, getFileName(preferenceClass), context, preferenceType)
             }
 
             // if handler is still null
@@ -75,7 +70,7 @@ object RetroPreference {
             }
         }) as T
 
-        proxy?.apply {
+        if (proxy != null) {
             cachePreference?.put(preferenceClass, proxy)
         }
 
@@ -89,11 +84,11 @@ object RetroPreference {
     }
 
     private fun handleClearMethod(preferences: SharedPreferences, method: Method): Boolean {
-        if (method.declaringClass == Clearable::class.java) {
+        return if (method.declaringClass == Clearable::class.java) {
             preferences.edit().clear().apply()
-            return true
+            true
         } else {
-            return false
+            false
         }
     }
 
@@ -135,25 +130,12 @@ object RetroPreference {
             return preferenceClass.simpleName
         }
 
-        if (annotations.size != 1) {
-            throw FileNameError(preferenceClass)
-        }
+        annotations
+                .filterIsInstance<FileName>()
+                .forEach { return it.value }
 
-        val annotation = annotations[0]
-        if (annotation is FileName) {
-            return annotation.value
-        } else {
-            throw FileNameError(preferenceClass, annotation)
-        }
+        return preferenceClass.simpleName
     }
-
-    private val preferenceCache: MutableMap<Class<*>, Any>?
-        get() {
-            if (mPreferenceCache == null) {
-                mPreferenceCache = ConcurrentHashMap<Class<*>, Any>()
-            }
-            return mPreferenceCache
-        }
 
     fun setEnableCache(enableCache: Boolean) {
         sEnableCache = enableCache

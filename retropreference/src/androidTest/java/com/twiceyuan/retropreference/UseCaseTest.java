@@ -29,7 +29,7 @@ public class UseCaseTest {
     public void useAppContext() throws Exception {
         // Context of the app under test.
         mAppContext = InstrumentationRegistry.getTargetContext();
-        mSettings = RetroPreference.INSTANCE.createKt(mAppContext, Settings.class, Context.MODE_PRIVATE);
+        mSettings = RetroPreference.create(mAppContext, Settings.class, Context.MODE_PRIVATE);
     }
 
     /**
@@ -83,7 +83,7 @@ public class UseCaseTest {
     public void testInteger() {
         mSettings.launch_count().set(7);
         Integer stored = mSettings.launch_count().get();
-        if (7 != stored) {
+        if (stored == null || stored != 7) {
             throw new AssertionError();
         }
         mSettings.launch_count().clear();
@@ -96,7 +96,7 @@ public class UseCaseTest {
     public void testBoolean() {
         mSettings.is_login().set(true);
         Boolean isLogin = mSettings.is_login().get();
-        Assert.assertTrue(isLogin);
+        Assert.assertTrue(isLogin == null || isLogin);
         mSettings.is_login().clear();
     }
 
@@ -106,7 +106,9 @@ public class UseCaseTest {
     @Test
     public void testFloat() {
         mSettings.user_points().set(1.1f);
-        Assert.assertEquals(1.1f, mSettings.user_points().get(), 0);
+        Float value = mSettings.user_points().get();
+        value = value == null ? 0 : value;
+        Assert.assertEquals(1.1f, value, 0);
         mSettings.user_points().clear();
     }
 
@@ -116,7 +118,9 @@ public class UseCaseTest {
     @Test
     public void testLong() {
         mSettings.last_login().set(12378217381L);
-        Assert.assertEquals(12378217381L, mSettings.last_login().get(), 0);
+        Long value = mSettings.last_login().get();
+        value = value == null ? 0 : value;
+        Assert.assertEquals(12378217381L, value, 0);
         mSettings.last_login().clear();
     }
 
@@ -144,7 +148,7 @@ public class UseCaseTest {
         Set<String> storedSet = mSettings.user_tags().get();
 
         Object[] originArray = originSet.toArray();
-        Object[] storedArray = storedSet.toArray();
+        Object[] storedArray = storedSet == null ? new Object[0] : storedSet.toArray();
 
         Arrays.sort(originArray);
         Arrays.sort(storedArray);

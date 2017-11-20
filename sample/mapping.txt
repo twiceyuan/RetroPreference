@@ -8966,11 +8966,11 @@ android.support.v7.widget.ViewUtils -> android.support.v7.widget.ay:
     void computeFitSystemWindows(android.view.View,android.graphics.Rect,android.graphics.Rect) -> a
     void makeOptionalFitsSystemWindows(android.view.View) -> b
     void <clinit>() -> <clinit>
-com.twiceyuan.retropreference.Preference -> com.twiceyuan.retropreference.a:
+Preference -> com.twiceyuan.retropreference.a:
     void set(java.lang.Object) -> a
     java.lang.Object get() -> a
     java.lang.Object getWithDefault(java.lang.Object) -> b
-com.twiceyuan.retropreference.RetroPreference -> com.twiceyuan.retropreference.b:
+RetroPreference -> com.twiceyuan.retropreference.b:
     java.lang.ref.SoftReference mPreferenceCache -> a
     boolean sEnableCache -> b
     java.lang.Object createKt(android.content.Context,java.lang.Class,int) -> a
@@ -8981,7 +8981,7 @@ com.twiceyuan.retropreference.RetroPreference -> com.twiceyuan.retropreference.b
     java.lang.String access$000(java.lang.reflect.Method) -> a
     boolean access$100(java.lang.reflect.Type) -> a
     void <clinit>() -> <clinit>
-com.twiceyuan.retropreference.RetroPreference$1 -> com.twiceyuan.retropreference.b$1:
+RetroPreference$1 -> com.twiceyuan.retropreference.b$1:
     android.content.SharedPreferences val$preferences -> a
     java.lang.Class val$preferenceClass -> b
     android.content.Context val$context -> c
@@ -8989,37 +8989,37 @@ com.twiceyuan.retropreference.RetroPreference$1 -> com.twiceyuan.retropreference
     java.lang.Object invoke(java.lang.Object,java.lang.reflect.Method,java.lang.Object[]) -> invoke
 com.twiceyuan.retropreference.Utils -> com.twiceyuan.retropreference.c:
     java.lang.reflect.Type getParameterUpperBound(int,java.lang.reflect.ParameterizedType) -> a
-com.twiceyuan.retropreference.annotations.FileName -> com.twiceyuan.retropreference.a.a:
+FileName -> com.twiceyuan.retropreference.a.a:
     java.lang.String value() -> a
-com.twiceyuan.retropreference.annotations.KeyName -> com.twiceyuan.retropreference.a.b:
+KeyName -> com.twiceyuan.retropreference.a.b:
     java.lang.String value() -> a
-com.twiceyuan.retropreference.annotations.PreferenceBuilder -> com.twiceyuan.retropreference.a.c:
+com.twiceyuan.retropreference.PreferenceBuilder -> com.twiceyuan.retropreference.a.c:
     java.lang.String mKey -> a
-    com.twiceyuan.retropreference.typeHandler.BaseTypeHandler mTypeHandler -> b
+    BaseTypeHandler mTypeHandler -> b
     void <init>() -> <init>
-    com.twiceyuan.retropreference.annotations.PreferenceBuilder setKey(java.lang.String) -> a
-    com.twiceyuan.retropreference.annotations.PreferenceBuilder setTypeHandler(com.twiceyuan.retropreference.typeHandler.BaseTypeHandler) -> a
-    com.twiceyuan.retropreference.Preference build() -> a
-    java.lang.String access$000(com.twiceyuan.retropreference.annotations.PreferenceBuilder) -> a
-    com.twiceyuan.retropreference.typeHandler.BaseTypeHandler access$100(com.twiceyuan.retropreference.annotations.PreferenceBuilder) -> b
-com.twiceyuan.retropreference.annotations.PreferenceBuilder$1 -> com.twiceyuan.retropreference.a.c$1:
-    com.twiceyuan.retropreference.annotations.PreferenceBuilder this$0 -> a
-    void <init>(com.twiceyuan.retropreference.annotations.PreferenceBuilder) -> <init>
+    com.twiceyuan.retropreference.PreferenceBuilder setKey(java.lang.String) -> a
+    com.twiceyuan.retropreference.PreferenceBuilder setTypeHandler(BaseTypeHandler) -> a
+    Preference build() -> a
+    java.lang.String access$000(com.twiceyuan.retropreference.PreferenceBuilder) -> a
+    BaseTypeHandler access$100(com.twiceyuan.retropreference.PreferenceBuilder) -> b
+com.twiceyuan.retropreference.PreferenceBuilder$1 -> com.twiceyuan.retropreference.a.c$1:
+    com.twiceyuan.retropreference.PreferenceBuilder this$0 -> a
+    void <init>(com.twiceyuan.retropreference.PreferenceBuilder) -> <init>
     void set(java.lang.Object) -> a
     java.lang.Object get() -> a
     java.lang.Object getWithDefault(java.lang.Object) -> b
-com.twiceyuan.retropreference.exceptions.FileNameError -> com.twiceyuan.retropreference.b.a:
+FileNameError -> com.twiceyuan.retropreference.b.a:
     void <init>(java.lang.Class) -> <init>
     void <init>(java.lang.Class,java.lang.annotation.Annotation) -> <init>
-com.twiceyuan.retropreference.exceptions.KeyNameError -> com.twiceyuan.retropreference.b.b:
+KeyNameError -> com.twiceyuan.retropreference.b.b:
     void <init>(java.lang.reflect.Method) -> <init>
     void <init>(java.lang.reflect.Method,java.lang.annotation.Annotation) -> <init>
 com.twiceyuan.retropreference.sample.MainActivity -> com.twiceyuan.retropreference.sample.MainActivity:
     void <init>() -> <init>
     void onCreate(android.os.Bundle) -> onCreate
 com.twiceyuan.retropreference.sample.Settings -> com.twiceyuan.retropreference.sample.a:
-    com.twiceyuan.retropreference.Preference launchCount() -> a
-    com.twiceyuan.retropreference.Preference currentUser() -> b
+    Preference launchCount() -> a
+    Preference currentUser() -> b
 com.twiceyuan.retropreference.sample.User -> com.twiceyuan.retropreference.sample.b:
     java.lang.String username -> a
     java.lang.String password -> b
@@ -9027,13 +9027,13 @@ com.twiceyuan.retropreference.sample.User -> com.twiceyuan.retropreference.sampl
     int age -> d
     void <init>() -> <init>
     java.lang.String toString() -> toString
-com.twiceyuan.retropreference.typeHandler.BaseTypeHandler -> com.twiceyuan.retropreference.c.a:
+BaseTypeHandler -> com.twiceyuan.retropreference.c.a:
     android.content.SharedPreferences mPreferences -> a
     void <init>(android.content.SharedPreferences) -> <init>
     void setValue(java.lang.String,java.lang.Object) -> a
     java.lang.Object get(java.lang.String,java.lang.Object) -> b
     java.lang.Object defaultValue() -> a
-com.twiceyuan.retropreference.typeHandler.BooleanHandler -> com.twiceyuan.retropreference.c.b:
+BooleanHandler -> com.twiceyuan.retropreference.c.b:
     void <init>(android.content.SharedPreferences) -> <init>
     void setValue(java.lang.String,java.lang.Boolean) -> a
     java.lang.Boolean get(java.lang.String,java.lang.Boolean) -> b
@@ -9041,7 +9041,7 @@ com.twiceyuan.retropreference.typeHandler.BooleanHandler -> com.twiceyuan.retrop
     java.lang.Object defaultValue() -> a
     java.lang.Object get(java.lang.String,java.lang.Object) -> b
     void setValue(java.lang.String,java.lang.Object) -> a
-com.twiceyuan.retropreference.typeHandler.FloatHandler -> com.twiceyuan.retropreference.c.c:
+FloatHandler -> com.twiceyuan.retropreference.c.c:
     void <init>(android.content.SharedPreferences) -> <init>
     void setValue(java.lang.String,java.lang.Float) -> a
     java.lang.Float get(java.lang.String,java.lang.Float) -> b
@@ -9049,7 +9049,7 @@ com.twiceyuan.retropreference.typeHandler.FloatHandler -> com.twiceyuan.retropre
     java.lang.Object defaultValue() -> a
     java.lang.Object get(java.lang.String,java.lang.Object) -> b
     void setValue(java.lang.String,java.lang.Object) -> a
-com.twiceyuan.retropreference.typeHandler.IntegerHandler -> com.twiceyuan.retropreference.c.d:
+IntegerHandler -> com.twiceyuan.retropreference.c.d:
     void <init>(android.content.SharedPreferences) -> <init>
     void setValue(java.lang.String,java.lang.Integer) -> a
     java.lang.Integer get(java.lang.String,java.lang.Integer) -> b
@@ -9057,7 +9057,7 @@ com.twiceyuan.retropreference.typeHandler.IntegerHandler -> com.twiceyuan.retrop
     java.lang.Object defaultValue() -> a
     java.lang.Object get(java.lang.String,java.lang.Object) -> b
     void setValue(java.lang.String,java.lang.Object) -> a
-com.twiceyuan.retropreference.typeHandler.LongHandler -> com.twiceyuan.retropreference.c.e:
+LongHandler -> com.twiceyuan.retropreference.c.e:
     void <init>(android.content.SharedPreferences) -> <init>
     void setValue(java.lang.String,java.lang.Long) -> a
     java.lang.Long get(java.lang.String,java.lang.Long) -> b
@@ -9065,24 +9065,24 @@ com.twiceyuan.retropreference.typeHandler.LongHandler -> com.twiceyuan.retropref
     java.lang.Object defaultValue() -> a
     java.lang.Object get(java.lang.String,java.lang.Object) -> b
     void setValue(java.lang.String,java.lang.Object) -> a
-com.twiceyuan.retropreference.typeHandler.SerializableHandler -> com.twiceyuan.retropreference.c.f:
+SerializableHandler -> com.twiceyuan.retropreference.c.f:
     android.content.Context mContext -> b
     java.lang.String mPreferencesName -> c
     void <init>(android.content.SharedPreferences,java.lang.String,android.content.Context) -> <init>
     void setValue(java.lang.String,java.lang.Object) -> a
     java.lang.Object get(java.lang.String,java.lang.Object) -> b
     java.io.File getObjectFile(java.lang.String) -> a
-com.twiceyuan.retropreference.typeHandler.StringHandler -> com.twiceyuan.retropreference.c.g:
+StringHandler -> com.twiceyuan.retropreference.c.g:
     void <init>(android.content.SharedPreferences) -> <init>
     void setValue(java.lang.String,java.lang.String) -> a
     java.lang.String get(java.lang.String,java.lang.String) -> b
     java.lang.Object get(java.lang.String,java.lang.Object) -> b
     void setValue(java.lang.String,java.lang.Object) -> a
-com.twiceyuan.retropreference.typeHandler.StringSetHandler -> com.twiceyuan.retropreference.c.h:
+StringSetHandler -> com.twiceyuan.retropreference.c.h:
     void <init>(android.content.SharedPreferences) -> <init>
     void setValue(java.lang.String,java.util.Set) -> a
     java.util.Set get(java.lang.String,java.util.Set) -> b
     java.lang.Object get(java.lang.String,java.lang.Object) -> b
     void setValue(java.lang.String,java.lang.Object) -> a
-com.twiceyuan.retropreference.typeHandler.TypeHandlerFactory -> com.twiceyuan.retropreference.c.i:
-    com.twiceyuan.retropreference.typeHandler.BaseTypeHandler build(android.content.SharedPreferences,java.lang.reflect.Type) -> a
+TypeHandlerFactory -> com.twiceyuan.retropreference.c.i:
+    BaseTypeHandler build(android.content.SharedPreferences,java.lang.reflect.Type) -> a
