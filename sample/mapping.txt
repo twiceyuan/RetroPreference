@@ -167,7 +167,7 @@ android.support.graphics.drawable.VectorDrawableCompat -> android.support.a.a.f:
     boolean canApplyTheme() -> canApplyTheme
     boolean isAutoMirrored() -> isAutoMirrored
     void setAutoMirrored(boolean) -> setAutoMirrored
-    android.support.graphics.drawable.VectorDrawableCompat create(android.content.res.Resources,int,android.content.res.Resources$Theme) -> a
+    android.support.graphics.drawable.VectorDrawableCompat createKt(android.content.res.Resources,int,android.content.res.Resources$Theme) -> a
     android.support.graphics.drawable.VectorDrawableCompat createFromXmlInner(android.content.res.Resources,org.xmlpull.v1.XmlPullParser,android.util.AttributeSet,android.content.res.Resources$Theme) -> a
     int applyAlpha(int,float) -> a
     void inflate(android.content.res.Resources,org.xmlpull.v1.XmlPullParser,android.util.AttributeSet) -> inflate
@@ -1325,7 +1325,7 @@ android.support.v4.app.TaskStackBuilder -> android.support.v4.a.ag:
     java.util.ArrayList mIntents -> b
     android.content.Context mSourceContext -> c
     void <init>(android.content.Context) -> <init>
-    android.support.v4.app.TaskStackBuilder create(android.content.Context) -> a
+    android.support.v4.app.TaskStackBuilder createKt(android.content.Context) -> a
     android.support.v4.app.TaskStackBuilder addNextIntent(android.content.Intent) -> a
     android.support.v4.app.TaskStackBuilder addParentStack(android.app.Activity) -> a
     android.support.v4.app.TaskStackBuilder addParentStack(android.content.ComponentName) -> a
@@ -1818,7 +1818,7 @@ android.support.v4.util.LruCache -> android.support.v4.f.g:
     java.lang.Object put(java.lang.Object,java.lang.Object) -> a
     void trimToSize(int) -> a
     void entryRemoved(boolean,java.lang.Object,java.lang.Object,java.lang.Object) -> a
-    java.lang.Object create(java.lang.Object) -> b
+    java.lang.Object createKt(java.lang.Object) -> b
     int safeSizeOf(java.lang.Object,java.lang.Object) -> c
     int sizeOf(java.lang.Object,java.lang.Object) -> b
     java.lang.String toString() -> toString
@@ -3508,8 +3508,8 @@ android.support.v4.widget.ResourceCursorAdapter -> android.support.v4.widget.s:
 android.support.v4.widget.ScrollerCompat -> android.support.v4.widget.t:
     android.widget.OverScroller mScroller -> a
     boolean mIsIcsOrNewer -> b
-    android.support.v4.widget.ScrollerCompat create(android.content.Context) -> a
-    android.support.v4.widget.ScrollerCompat create(android.content.Context,android.view.animation.Interpolator) -> a
+    android.support.v4.widget.ScrollerCompat createKt(android.content.Context) -> a
+    android.support.v4.widget.ScrollerCompat createKt(android.content.Context,android.view.animation.Interpolator) -> a
     void <init>(boolean,android.content.Context,android.view.animation.Interpolator) -> <init>
     boolean isFinished() -> a
     int getCurrX() -> b
@@ -3769,7 +3769,7 @@ android.support.v7.app.AlertDialog$Builder -> android.support.v7.app.b$a:
     android.support.v7.app.AlertDialog$Builder setIcon(android.graphics.drawable.Drawable) -> a
     android.support.v7.app.AlertDialog$Builder setOnKeyListener(android.content.DialogInterface$OnKeyListener) -> a
     android.support.v7.app.AlertDialog$Builder setAdapter(android.widget.ListAdapter,android.content.DialogInterface$OnClickListener) -> a
-    android.support.v7.app.AlertDialog create() -> b
+    android.support.v7.app.AlertDialog createKt() -> b
 android.support.v7.app.AppCompatActivity -> android.support.v7.app.c:
     android.support.v7.app.AppCompatDelegate mDelegate -> m
     int mThemeId -> n
@@ -3819,9 +3819,9 @@ android.support.v7.app.AppCompatCallback -> android.support.v7.app.d:
 android.support.v7.app.AppCompatDelegate -> android.support.v7.app.e:
     int sDefaultNightMode -> a
     boolean sCompatVectorFromResourcesEnabled -> b
-    android.support.v7.app.AppCompatDelegate create(android.app.Activity,android.support.v7.app.AppCompatCallback) -> a
-    android.support.v7.app.AppCompatDelegate create(android.app.Dialog,android.support.v7.app.AppCompatCallback) -> a
-    android.support.v7.app.AppCompatDelegate create(android.content.Context,android.view.Window,android.support.v7.app.AppCompatCallback) -> a
+    android.support.v7.app.AppCompatDelegate createKt(android.app.Activity,android.support.v7.app.AppCompatCallback) -> a
+    android.support.v7.app.AppCompatDelegate createKt(android.app.Dialog,android.support.v7.app.AppCompatCallback) -> a
+    android.support.v7.app.AppCompatDelegate createKt(android.content.Context,android.view.Window,android.support.v7.app.AppCompatCallback) -> a
     void <init>() -> <init>
     android.support.v7.app.ActionBar getSupportActionBar() -> a
     android.view.MenuInflater getMenuInflater() -> b
@@ -7812,7 +7812,7 @@ android.support.v7.widget.AppCompatTextHelper -> android.support.v7.widget.y:
     android.support.v7.widget.TintInfo mDrawableTopTint -> c
     android.support.v7.widget.TintInfo mDrawableRightTint -> d
     android.support.v7.widget.TintInfo mDrawableBottomTint -> e
-    android.support.v7.widget.AppCompatTextHelper create(android.widget.TextView) -> a
+    android.support.v7.widget.AppCompatTextHelper createKt(android.widget.TextView) -> a
     void <init>(android.widget.TextView) -> <init>
     void loadFromAttributes(android.util.AttributeSet,int) -> a
     void onSetTextAppearance(android.content.Context,int) -> a
@@ -8973,7 +8973,7 @@ com.twiceyuan.retropreference.Preference -> com.twiceyuan.retropreference.a:
 com.twiceyuan.retropreference.RetroPreference -> com.twiceyuan.retropreference.b:
     java.lang.ref.SoftReference mPreferenceCache -> a
     boolean sEnableCache -> b
-    java.lang.Object create(android.content.Context,java.lang.Class,int) -> a
+    java.lang.Object createKt(android.content.Context,java.lang.Class,int) -> a
     boolean isSerializable(java.lang.reflect.Type) -> b
     java.lang.String getKeyNameFromMethod(java.lang.reflect.Method) -> b
     java.lang.String getFileName(java.lang.Class) -> a

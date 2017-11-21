@@ -28,7 +28,7 @@ public class TypeChangeTest {
 
     @Test
     public void testSave() {
-        TypeChangeBefore preferences = RetroPreference.create(
+        TypeChangeBefore preferences = RetroPreference.INSTANCE.createKt(
                 mAppContext,
                 TypeChangeBefore.class,
                 Context.MODE_PRIVATE
@@ -38,7 +38,7 @@ public class TypeChangeTest {
         preferences.isChanged().set(true);
         preferences.model().set(new OriginModel());
 
-        TypeChangeAfter preferences2 = RetroPreference.create(
+        TypeChangeAfter preferences2 = RetroPreference.INSTANCE.createKt(
                 mAppContext,
                 TypeChangeAfter.class,
                 Context.MODE_PRIVATE

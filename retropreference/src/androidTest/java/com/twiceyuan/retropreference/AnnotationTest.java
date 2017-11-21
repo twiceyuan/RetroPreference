@@ -30,7 +30,7 @@ public class AnnotationTest {
     public void useAppContext() throws Exception {
         // Context of the app under test.
         mAppContext = InstrumentationRegistry.getTargetContext();
-        mSettings = RetroPreference.create(mAppContext, AnnotationSettings.class, Context.MODE_PRIVATE);
+        mSettings = RetroPreference.INSTANCE.createKt(mAppContext, AnnotationSettings.class, Context.MODE_PRIVATE);
     }
 
     /**
@@ -40,7 +40,7 @@ public class AnnotationTest {
     public void testWriteWithSystemRead() {
         mSettings.username().set("twiceYuan");
         SharedPreferences preferences = mAppContext.getSharedPreferences(
-                RetroPreference.getFileName(AnnotationSettings.class),
+                RetroPreference.INSTANCE.getFileName(AnnotationSettings.class),
                 Context.MODE_PRIVATE);
         String stored = preferences.getString("username", "");
         if (!stored.equals("twiceYuan")) {
@@ -55,7 +55,7 @@ public class AnnotationTest {
     @Test
     public void testReadWithSystemWrite() {
         SharedPreferences preferences = mAppContext.getSharedPreferences(
-                RetroPreference.getFileName(AnnotationSettings.class),
+                RetroPreference.INSTANCE.getFileName(AnnotationSettings.class),
                 Context.MODE_PRIVATE);
         preferences.edit().putString("username", "twiceYuan").apply();
 
