@@ -11,7 +11,6 @@ import com.twiceyuan.retropreference.typeHandler.SerializableHandler
 import com.twiceyuan.retropreference.typeHandler.TypeHandlerFactory
 import java.io.Serializable
 import java.lang.reflect.*
-import java.util.concurrent.ConcurrentHashMap
 
 /**
  * Created by twiceYuan on 20/01/2017.
@@ -21,21 +20,12 @@ import java.util.concurrent.ConcurrentHashMap
  */
 object RetroPreference {
 
-    private var sEnableCache = true
-
-    private val preferenceCache: MutableMap<Class<*>, Any> = ConcurrentHashMap()
-
     @JvmStatic
     fun <T> create(context: Context, preferenceClass: Class<T>, mode: Int): T = createKt(context, preferenceClass, mode)
 
-    fun <T> createKt(context: Context, preferenceClass: Class<T>, mode: Int): T {
+    inline fun <reified T> createKt(context: Context, mode: Int): T = createKt(context, T::class.java, mode)
 
-        val cachePreference: MutableMap<Class<*>, Any>? = preferenceCache
-        val cached = cachePreference?.get(preferenceClass)
-        if (sEnableCache && cached != null) {
-            @Suppress("UNCHECKED_CAST")
-            return cached as T
-        }
+    fun <T> createKt(context: Context, preferenceClass: Class<T>, mode: Int): T {
 
         val preferenceName = getFileName(preferenceClass)
         val preferences = context.getSharedPreferences(preferenceName, mode)
@@ -43,9 +33,8 @@ object RetroPreference {
         val loader = preferenceClass.classLoader
         val implementClassed = arrayOf<Class<*>>(preferenceClass)
 
-
         @Suppress("UNCHECKED_CAST")
-        val proxy = Proxy.newProxyInstance(loader, implementClassed, InvocationHandler { proxy, method, _ ->
+        return Proxy.newProxyInstance(loader, implementClassed, InvocationHandler { proxy, method, _ ->
             if (proxy is Clearable && handleClearMethod(preferences, method)) {
                 return@InvocationHandler null
             }
@@ -61,20 +50,12 @@ object RetroPreference {
             }
 
             // if handler is still null
-            when (handler) {
-                null -> {
-                    val message = "SharedPreferences does not support this type: " + preferenceType.toString()
-                    throw IllegalStateException(message)
-                }
-                else -> PreferenceBuilder(key, handler).build()
+            if (handler == null) {
+                val message = "SharedPreferences does not support this type: " + preferenceType.toString()
+                throw IllegalStateException(message)
             }
+            PreferenceBuilder(key, handler).build()
         }) as T
-
-        if (proxy != null) {
-            cachePreference?.put(preferenceClass, proxy)
-        }
-
-        return proxy
     }
 
     private fun isSerializable(type: Type): Boolean {
@@ -135,9 +116,5 @@ object RetroPreference {
                 .forEach { return it.value }
 
         return preferenceClass.simpleName
-    }
-
-    fun setEnableCache(enableCache: Boolean) {
-        sEnableCache = enableCache
     }
 }

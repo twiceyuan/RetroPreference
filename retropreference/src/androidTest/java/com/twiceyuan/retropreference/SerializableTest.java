@@ -33,13 +33,14 @@ public class SerializableTest {
         originUser.age = 99;
         originUser.score = 1203910;
 
-        SerializableSettings settings = RetroPreference.INSTANCE.createKt(
+        SerializableSettings settings = RetroPreference.create(
                 mAppContext,
                 SerializableSettings.class,
                 Context.MODE_PRIVATE);
 
         settings.storedUser().set(originUser);
         MockUser storedUser = settings.storedUser().get();
+        Assert.assertTrue(storedUser != null);
         Assert.assertEquals(originUser.username, storedUser.username);
         Assert.assertEquals(originUser.password, storedUser.password);
         Assert.assertEquals(originUser.score, storedUser.score, 0);

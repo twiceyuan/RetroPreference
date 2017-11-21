@@ -26,8 +26,8 @@ class AnnotationTestKotlin {
     fun useAppContext() {
         // Context of the app under test.
         mAppContext = InstrumentationRegistry.getTargetContext()
-        mSettings = RetroPreference.createKt(mAppContext, AnnotationSettings::class.java, Context.MODE_PRIVATE)
-        mSettings2 = RetroPreference.createKt(mAppContext, AnnotationSettings2::class.java, Context.MODE_PRIVATE)
+        mSettings = RetroPreference.createKt(mAppContext, Context.MODE_PRIVATE)
+        mSettings2 = RetroPreference.createKt(mAppContext, Context.MODE_PRIVATE)
     }
 
     /**
