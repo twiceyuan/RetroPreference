@@ -5,14 +5,12 @@ import android.content.SharedPreferences
 import com.twiceyuan.retropreference.annotations.FileName
 import com.twiceyuan.retropreference.annotations.KeyName
 import com.twiceyuan.retropreference.annotations.PreferenceBuilder
-import com.twiceyuan.retropreference.exceptions.FileNameError
 import com.twiceyuan.retropreference.exceptions.KeyNameError
 import com.twiceyuan.retropreference.typeHandler.BaseTypeHandler
 import com.twiceyuan.retropreference.typeHandler.SerializableHandler
 import com.twiceyuan.retropreference.typeHandler.TypeHandlerFactory
 import java.io.Serializable
 import java.lang.reflect.*
-import java.util.concurrent.ConcurrentHashMap
 
 /**
  * Created by twiceYuan on 20/01/2017.
@@ -22,22 +20,12 @@ import java.util.concurrent.ConcurrentHashMap
  */
 object RetroPreference {
 
-    private var mPreferenceCache: MutableMap<Class<*>, Any>? = null
-    private var sEnableCache = true
-
     @JvmStatic
-    fun <T> create(context: Context, preferenceClass: Class<T>, mode: Int): T {
-        return createKt(context, preferenceClass, mode)
-    }
+    fun <T> create(context: Context, preferenceClass: Class<T>, mode: Int): T = createKt(context, preferenceClass, mode)
+
+    inline fun <reified T> createKt(context: Context, mode: Int): T = createKt(context, T::class.java, mode)
 
     fun <T> createKt(context: Context, preferenceClass: Class<T>, mode: Int): T {
-
-        val cachePreference: MutableMap<Class<*>, Any>? = preferenceCache
-        val cached = cachePreference?.get(preferenceClass)
-        if (sEnableCache && cached != null) {
-            @Suppress("UNCHECKED_CAST")
-            return cached as T
-        }
 
         val preferenceName = getFileName(preferenceClass)
         val preferences = context.getSharedPreferences(preferenceName, mode)
@@ -45,9 +33,8 @@ object RetroPreference {
         val loader = preferenceClass.classLoader
         val implementClassed = arrayOf<Class<*>>(preferenceClass)
 
-
         @Suppress("UNCHECKED_CAST")
-        val proxy = Proxy.newProxyInstance(loader, implementClassed, InvocationHandler { proxy, method, _ ->
+        return Proxy.newProxyInstance(loader, implementClassed, InvocationHandler { proxy, method, _ ->
             if (proxy is Clearable && handleClearMethod(preferences, method)) {
                 return@InvocationHandler null
             }
@@ -59,27 +46,16 @@ object RetroPreference {
             var handler: BaseTypeHandler<Any>? = TypeHandlerFactory.build(preferences, preferenceType)
 
             if (handler == null && isSerializable(preferenceType)) {
-                handler = SerializableHandler(preferences,
-                        getFileName(preferenceClass),
-                        context,
-                        preferenceType)
+                handler = SerializableHandler(preferences, getFileName(preferenceClass), context, preferenceType)
             }
 
             // if handler is still null
-            when (handler) {
-                null -> {
-                    val message = "SharedPreferences does not support this type: " + preferenceType.toString()
-                    throw IllegalStateException(message)
-                }
-                else -> PreferenceBuilder(key, handler).build()
+            if (handler == null) {
+                val message = "SharedPreferences does not support this type: " + preferenceType.toString()
+                throw IllegalStateException(message)
             }
+            PreferenceBuilder(key, handler).build()
         }) as T
-
-        proxy?.apply {
-            cachePreference?.put(preferenceClass, proxy)
-        }
-
-        return proxy
     }
 
     private fun isSerializable(type: Type): Boolean {
@@ -89,11 +65,11 @@ object RetroPreference {
     }
 
     private fun handleClearMethod(preferences: SharedPreferences, method: Method): Boolean {
-        if (method.declaringClass == Clearable::class.java) {
+        return if (method.declaringClass == Clearable::class.java) {
             preferences.edit().clear().apply()
-            return true
+            true
         } else {
-            return false
+            false
         }
     }
 
@@ -135,27 +111,10 @@ object RetroPreference {
             return preferenceClass.simpleName
         }
 
-        if (annotations.size != 1) {
-            throw FileNameError(preferenceClass)
-        }
+        annotations
+                .filterIsInstance<FileName>()
+                .forEach { return it.value }
 
-        val annotation = annotations[0]
-        if (annotation is FileName) {
-            return annotation.value
-        } else {
-            throw FileNameError(preferenceClass, annotation)
-        }
-    }
-
-    private val preferenceCache: MutableMap<Class<*>, Any>?
-        get() {
-            if (mPreferenceCache == null) {
-                mPreferenceCache = ConcurrentHashMap<Class<*>, Any>()
-            }
-            return mPreferenceCache
-        }
-
-    fun setEnableCache(enableCache: Boolean) {
-        sEnableCache = enableCache
+        return preferenceClass.simpleName
     }
 }

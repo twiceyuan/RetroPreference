@@ -13,7 +13,5 @@ internal class StringHandler(preferences: SharedPreferences) : BaseTypeHandler<S
         mPreferences.edit().putString(key, value).apply()
     }
 
-    override fun get(key: String, defaultValue: String?): String? {
-        return mPreferences.getString(key, defaultValue)
-    }
+    override fun get(key: String, defaultValue: String?): String? = mPreferences.getString(key, defaultValue)
 }
