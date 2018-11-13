@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         // getWithDefault the preference value
         val count: Int? = launchCount.getWithDefault(0)
 
-        (findViewById(R.id.tv_launch) as TextView).text = String.format("启动次数：%s", count)
+        findViewById<TextView>(R.id.tv_launch).text = String.format("启动次数：%s", count)
 
         if (count != null) {
             // set the preference value
@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         if (currentUser != null) {
             currentUser.age++
             currentUser.score -= 0.1f
-            (findViewById(R.id.tv_user) as TextView).text = String.format("当前用户：\n%s", currentUser.toString())
+            findViewById<TextView>(R.id.tv_user).text = String.format("当前用户：\n%s", currentUser.toString())
         } else {
             currentUser = User(username = "twiceYuan", password = "123456", age = 0, score = 1000f)
         }

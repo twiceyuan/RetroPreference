@@ -59,7 +59,11 @@ object RetroPreference {
     }
 
     private fun isSerializable(type: Type): Boolean {
-        val interfaces = (type as Class<*>).interfaces
+        val interfaces = if (type is ParameterizedType) {
+            (type.rawType as? Class<*>)?.interfaces
+        } else {
+            (type as? Class<*>)?.interfaces
+        }
         if (interfaces == null || interfaces.isEmpty()) return false
         return interfaces.any { it == Serializable::class.java }
     }
@@ -82,7 +86,7 @@ object RetroPreference {
      */
     private fun getKeyNameFromMethod(method: Method): String {
         val annotations = method.annotations
-        if (annotations == null || annotations.isEmpty()) {
+        if (annotations.isEmpty()) {
             return method.name
         }
 
@@ -107,7 +111,7 @@ object RetroPreference {
      */
     fun getFileName(preferenceClass: Class<*>): String {
         val annotations = preferenceClass.annotations
-        if (annotations == null || annotations.isEmpty()) {
+        if (annotations.isEmpty()) {
             return preferenceClass.simpleName
         }
 
