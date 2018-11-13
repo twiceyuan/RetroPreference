@@ -22,5 +22,8 @@ public interface Settings extends Clearable {
      */
     Preference<User> currentUser();
 
-    Preference<HashMap<String, Integer>> test();
+    /**
+     * Map type test
+     */
+    Preference<HashMap<String, Integer>> testMap();
 }

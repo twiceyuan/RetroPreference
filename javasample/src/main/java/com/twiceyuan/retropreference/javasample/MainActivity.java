@@ -3,12 +3,17 @@ package com.twiceyuan.retropreference.javasample;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.twiceyuan.retropreference.Preference;
 import com.twiceyuan.retropreference.RetroPreference;
 
+import java.util.HashMap;
+
 public class MainActivity extends AppCompatActivity {
+
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,5 +45,14 @@ public class MainActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.tv_user)).setText(String.format("当前用户：\n%s", currentUser.toString()));
 
         userPreference.set(currentUser);
+
+        HashMap<String, Integer> map = new HashMap<>();
+        map.put("Test", 123);
+        settings.testMap().set(map);
+
+        HashMap<String, Integer> readMap = settings.testMap().get();
+        if (readMap != null) {
+            Log.i(TAG, String.valueOf(readMap.get("Test")));
+        }
     }
 }

@@ -3,6 +3,7 @@ package com.twiceyuan.retropreference.typeHandler
 import android.content.Context
 import android.content.SharedPreferences
 import java.io.*
+import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
 
 /**
@@ -36,16 +37,19 @@ class SerializableHandler(preferences: SharedPreferences,
      */
     override fun get(key: String, defaultValue: Any?): Any? {
         val objectFile = getObjectFile(key) ?: return defaultValue
-        try {
+        return try {
             val fileInput = FileInputStream(objectFile)
             val objectInput = ObjectInputStream(fileInput)
             val o = objectInput.readObject()
-            return (mObjectType as Class<*>).cast(o)
+            if (mObjectType is ParameterizedType) {
+                (mObjectType.rawType as Class<*>).cast(o)
+            } else {
+                (mObjectType as Class<*>).cast(o)
+            }
         } catch (e: Exception) {
             e.printStackTrace()
-            return defaultValue
+            defaultValue
         }
-
     }
 
     private fun getObjectFile(key: String): File? {
