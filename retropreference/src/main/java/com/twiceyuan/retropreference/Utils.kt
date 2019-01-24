@@ -13,7 +13,7 @@ import java.lang.reflect.WildcardType
 /**
  * copy from retrofit.
  */
-fun getParameterUpperBound(index: Int, type: ParameterizedType): Type {
+internal fun getParameterUpperBound(index: Int, type: ParameterizedType): Type {
     val types = type.actualTypeArguments
     if (index < 0 || index >= types.size) {
         throw IllegalArgumentException("Index " + index + " not in range [0," + types.size + ") for " + type)

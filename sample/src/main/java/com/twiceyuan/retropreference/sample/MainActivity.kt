@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
 import com.twiceyuan.retropreference.RetroPreference
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -36,10 +37,13 @@ class MainActivity : AppCompatActivity() {
         if (currentUser != null) {
             currentUser.age++
             currentUser.score -= 0.1f
-            findViewById<TextView>(R.id.tv_user).text = String.format("当前用户：\n%s", currentUser.toString())
+            val textDesc = "当前用户：\n$currentUser"
+            findViewById<TextView>(R.id.tv_user).text = textDesc
         } else {
             currentUser = User(username = "twiceYuan", password = "123456", age = 0, score = 1000f)
         }
         userPreference.set(currentUser)
+
+        btn_clear_all.setOnClickListener { settings.clear() }
     }
 }

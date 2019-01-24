@@ -62,10 +62,4 @@ public class MainActivity extends AppCompatActivity {
     public void clear(View view) {
         settings.clear();
     }
-
-    public void clearWithoutCount(View view) {
-        Integer count = settings.launchCount().get();
-        settings.clear();
-        settings.launchCount().set(count);
-    }
 }
