@@ -20,6 +20,8 @@ import java.lang.reflect.*
  */
 object RetroPreference {
 
+    private const val SERIALIZABLE_FILE_PREFIX = "RetroPreference_"
+
     @JvmStatic
     fun <T> create(context: Context, preferenceClass: Class<T>, mode: Int): T = createKt(context, preferenceClass, mode)
 
@@ -35,7 +37,7 @@ object RetroPreference {
 
         @Suppress("UNCHECKED_CAST")
         return Proxy.newProxyInstance(loader, implementClassed, InvocationHandler { proxy, method, _ ->
-            if (proxy is Clearable && handleClearMethod(preferences, method)) {
+            if (proxy is Clearable && handleClearMethod(context, preferenceClass, preferences, method)) {
                 return@InvocationHandler null
             }
 
@@ -68,9 +70,22 @@ object RetroPreference {
         return interfaces.any { it == Serializable::class.java }
     }
 
-    private fun handleClearMethod(preferences: SharedPreferences, method: Method): Boolean {
+    private fun handleClearMethod(
+            context: Context,
+            preferenceClass: Class<*>,
+            preferences: SharedPreferences,
+            method: Method
+    ): Boolean {
         return if (method.declaringClass == Clearable::class.java) {
             preferences.edit().clear().apply()
+            val dir = context.getDir(getFileName(preferenceClass), Context.MODE_PRIVATE)
+            if (dir.exists()) {
+                dir.listFiles().forEach {
+                    if (it.exists()) {
+                        it.delete()
+                    }
+                }
+            }
             true
         } else {
             false
@@ -119,6 +134,6 @@ object RetroPreference {
                 .filterIsInstance<FileName>()
                 .forEach { return it.value }
 
-        return preferenceClass.simpleName
+        return SERIALIZABLE_FILE_PREFIX + preferenceClass.simpleName
     }
 }

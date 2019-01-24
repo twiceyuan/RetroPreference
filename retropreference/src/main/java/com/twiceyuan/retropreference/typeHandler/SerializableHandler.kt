@@ -53,17 +53,12 @@ class SerializableHandler(preferences: SharedPreferences,
     }
 
     private fun getObjectFile(key: String): File? {
-        val dir = mContext.getDir(SERIALIZABLE_FILE_PREFIX + mPreferencesName, Context.MODE_PRIVATE)
+        val dir = mContext.getDir(mPreferencesName, Context.MODE_PRIVATE)
         if (!dir.exists()) {
             if (!dir.mkdirs()) {
                 return null
             }
         }
         return File(dir, key)
-    }
-
-    companion object {
-
-        private val SERIALIZABLE_FILE_PREFIX = "RetroPreference_"
     }
 }

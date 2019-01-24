@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.twiceyuan.retropreference.Preference;
@@ -15,13 +16,15 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
+    // Create preference proxy by RetroPreference.createKt();
+    private Settings settings;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Create preference proxy by RetroPreference.createKt();
-        Settings settings = RetroPreference.create(this, Settings.class, Context.MODE_PRIVATE);
+        settings = RetroPreference.create(this, Settings.class, Context.MODE_PRIVATE);
 
         // Get preference item holder
         Preference<Integer> launchCount = settings.launchCount();
@@ -54,5 +57,15 @@ public class MainActivity extends AppCompatActivity {
         if (readMap != null) {
             Log.i(TAG, String.valueOf(readMap.get("Test")));
         }
+    }
+
+    public void clear(View view) {
+        settings.clear();
+    }
+
+    public void clearWithoutCount(View view) {
+        Integer count = settings.launchCount().get();
+        settings.clear();
+        settings.launchCount().set(count);
     }
 }
