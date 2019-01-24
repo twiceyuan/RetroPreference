@@ -53,7 +53,7 @@ object RetroPreference {
 
             // if handler is still null
             if (handler == null) {
-                val message = "SharedPreferences does not support this type: " + preferenceType.toString()
+                val message = "SharedPreferences does not support this type: $preferenceType"
                 throw IllegalStateException(message)
             }
             PreferenceBuilder(key, handler).build()
@@ -80,11 +80,7 @@ object RetroPreference {
             preferences.edit().clear().apply()
             val dir = context.getDir(getFileName(preferenceClass), Context.MODE_PRIVATE)
             if (dir.exists()) {
-                dir.listFiles().forEach {
-                    if (it.exists()) {
-                        it.delete()
-                    }
-                }
+                dir.listFiles().filter { it.exists() }.forEach { it.delete() }
             }
             true
         } else {

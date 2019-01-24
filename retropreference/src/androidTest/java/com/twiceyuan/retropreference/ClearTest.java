@@ -3,6 +3,7 @@ package com.twiceyuan.retropreference;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 
+import com.twiceyuan.retropreference.model.MockUser;
 import com.twiceyuan.retropreference.preferences.ClearablePreference;
 
 import org.junit.Assert;
@@ -19,7 +20,7 @@ public class ClearTest {
     private Context mAppContext;
 
     @Before
-    public void useAppContext() throws Exception {
+    public void useAppContext() {
         // Context of the app under test.
         mAppContext = InstrumentationRegistry.getTargetContext();
     }
@@ -34,12 +35,21 @@ public class ClearTest {
         preference.username().set("twiceYuan");
         preference.password().set("password");
 
+        MockUser mockUser = new MockUser();
+        mockUser.username = "twiceYuan";
+        preference.user().set(mockUser);
+
         Assert.assertEquals("twiceYuan", preference.username().get());
         Assert.assertEquals("password", preference.password().get());
 
+        MockUser user = preference.user().get();
+        Assert.assertNotNull(user);
+        Assert.assertEquals("twiceYuan", user.username);
+
         preference.clear();
 
-        Assert.assertEquals(null, preference.username().get());
-        Assert.assertEquals(null, preference.username().get());
+        Assert.assertNull(preference.username().get());
+        Assert.assertNull(preference.username().get());
+        Assert.assertNull(preference.user().get());
     }
 }
