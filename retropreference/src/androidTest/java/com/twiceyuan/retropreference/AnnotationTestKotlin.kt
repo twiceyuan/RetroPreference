@@ -41,7 +41,7 @@ class AnnotationTestKotlin {
                 Context.MODE_PRIVATE)
         val stored = preferences.getString("username", "")
         Assert.assertEquals(stored, "twiceYuan")
-        mSettings.username().clear()
+        mSettings.username().remove()
     }
 
     /**
@@ -56,20 +56,7 @@ class AnnotationTestKotlin {
 
         val storedUsername = mSettings.username().get()
         Assert.assertEquals("twiceYuan", storedUsername)
-        mSettings.username().clear()
-    }
-
-    /**
-     * 测试默认值的作用
-     */
-    @Test
-    fun getWithDefault() {
-        var username = mSettings.username().getWithDefault("Anonymous")
-        Assert.assertEquals(username, "Anonymous")
-        mSettings.username().set("twiceYuan")
-        username = mSettings.username().getWithDefault("Anonymous")
-        Assert.assertEquals(username, "twiceYuan")
-        mSettings.username().clear()
+        mSettings.username().remove()
     }
 
     /**
@@ -82,7 +69,7 @@ class AnnotationTestKotlin {
         if (7 != stored) {
             throw AssertionError()
         }
-        mSettings.launchCount().clear()
+        mSettings.launchCount().remove()
     }
 
     /**
@@ -93,7 +80,7 @@ class AnnotationTestKotlin {
         mSettings.isLogin.set(true)
         val isLogin = mSettings.isLogin.get()
         Assert.assertTrue(isLogin!!)
-        mSettings.isLogin.clear()
+        mSettings.isLogin.remove()
     }
 
     /**
@@ -103,7 +90,7 @@ class AnnotationTestKotlin {
     fun testFloat() {
         mSettings.userPoints().set(1.1f)
         Assert.assertEquals(1.1f, mSettings.userPoints().get()!!, 0f)
-        mSettings.userPoints().clear()
+        mSettings.userPoints().remove()
     }
 
     /**
@@ -113,7 +100,7 @@ class AnnotationTestKotlin {
     fun testLong() {
         mSettings.lastLogin().set(12378217381L)
         Assert.assertEquals(12378217381f, mSettings.lastLogin().get()!!.toFloat(), 0f)
-        mSettings.lastLogin().clear()
+        mSettings.lastLogin().remove()
     }
 
     /**
@@ -123,7 +110,7 @@ class AnnotationTestKotlin {
     fun testString() {
         mSettings.username().set("twiceYuan")
         Assert.assertEquals("twiceYuan", mSettings.username().get())
-        mSettings.username().clear()
+        mSettings.username().remove()
     }
 
     /**
@@ -146,6 +133,6 @@ class AnnotationTestKotlin {
         Arrays.sort(storedArray)
 
         Assert.assertArrayEquals(originArray, storedArray)
-        mSettings.userTags().clear()
+        mSettings.userTags().remove()
     }
 }

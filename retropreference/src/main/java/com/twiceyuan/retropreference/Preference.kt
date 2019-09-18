@@ -1,7 +1,5 @@
 package com.twiceyuan.retropreference
 
-import org.jetbrains.annotations.NotNull
-
 /**
  * Created by twiceYuan on 20/01/2017.
 
@@ -10,8 +8,5 @@ import org.jetbrains.annotations.NotNull
 interface Preference<T> {
     fun set(t: T?)
     fun get(): T?
-
-    @NotNull
-    fun getWithDefault(@NotNull defaultValue: T): T
-    fun clear()
+    fun remove()
 }

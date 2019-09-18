@@ -46,7 +46,7 @@ public class AnnotationTest {
         if (!stored.equals("twiceYuan")) {
             throw new AssertionError();
         }
-        mSettings.username().clear();
+        mSettings.username().remove();
     }
 
     /**
@@ -61,20 +61,7 @@ public class AnnotationTest {
 
         String storedUsername = mSettings.username().get();
         Assert.assertEquals("twiceYuan", storedUsername);
-        mSettings.username().clear();
-    }
-
-    /**
-     * 测试默认值的作用
-     */
-    @Test
-    public void getWithDefault() {
-        String username = mSettings.username().getWithDefault("Anonymous");
-        Assert.assertEquals(username, "Anonymous");
-        mSettings.username().set("twiceYuan");
-        username = mSettings.username().getWithDefault("Anonymous");
-        Assert.assertEquals(username, "twiceYuan");
-        mSettings.username().clear();
+        mSettings.username().remove();
     }
 
     /**
@@ -87,7 +74,7 @@ public class AnnotationTest {
         if (7 != stored) {
             throw new AssertionError();
         }
-        mSettings.launchCount().clear();
+        mSettings.launchCount().remove();
     }
 
     /**
@@ -98,7 +85,7 @@ public class AnnotationTest {
         mSettings.isLogin().set(true);
         Boolean isLogin = mSettings.isLogin().get();
         Assert.assertTrue(isLogin);
-        mSettings.isLogin().clear();
+        mSettings.isLogin().remove();
     }
 
     /**
@@ -108,7 +95,7 @@ public class AnnotationTest {
     public void testFloat() {
         mSettings.userPoints().set(1.1f);
         Assert.assertEquals(1.1f, mSettings.userPoints().get(), 0);
-        mSettings.userPoints().clear();
+        mSettings.userPoints().remove();
     }
 
     /**
@@ -118,7 +105,7 @@ public class AnnotationTest {
     public void testLong() {
         mSettings.lastLogin().set(12378217381L);
         Assert.assertEquals(12378217381L, mSettings.lastLogin().get(), 0);
-        mSettings.lastLogin().clear();
+        mSettings.lastLogin().remove();
     }
 
     /**
@@ -128,7 +115,7 @@ public class AnnotationTest {
     public void testString() {
         mSettings.username().set("twiceYuan");
         Assert.assertEquals("twiceYuan", mSettings.username().get());
-        mSettings.username().clear();
+        mSettings.username().remove();
     }
 
     /**
@@ -151,6 +138,6 @@ public class AnnotationTest {
         Arrays.sort(storedArray);
 
         Assert.assertArrayEquals(originArray, storedArray);
-        mSettings.userTags().clear();
+        mSettings.userTags().remove();
     }
 }

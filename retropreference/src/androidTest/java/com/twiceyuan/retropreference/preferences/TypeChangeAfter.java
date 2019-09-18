@@ -1,5 +1,6 @@
 package com.twiceyuan.retropreference.preferences;
 
+import com.twiceyuan.retropreference.KVStorage;
 import com.twiceyuan.retropreference.Preference;
 import com.twiceyuan.retropreference.annotations.FileName;
 import com.twiceyuan.retropreference.model.ChangedModel;
@@ -10,7 +11,7 @@ import com.twiceyuan.retropreference.model.ChangedModel;
  * 改变类型之后的配置
  */
 @FileName("test_type_change")
-public interface TypeChangeAfter {
+public interface TypeChangeAfter extends KVStorage {
 
     Preference<Integer> keep();
 

@@ -3,8 +3,7 @@ package com.twiceyuan.retropreference;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 
-import com.twiceyuan.retropreference.model.MockUser;
-import com.twiceyuan.retropreference.preferences.ClearablePreference;
+import com.twiceyuan.retropreference.preferences.StoragePreference;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,7 +12,7 @@ import org.junit.Test;
 /**
  * Created by twiceYuan on 10/02/2017.
  *
- * 测试 clear 功能
+ * 测试 remove 功能
  */
 public class ClearTest {
 
@@ -27,29 +26,20 @@ public class ClearTest {
 
     @Test
     public void testClear() {
-        ClearablePreference preference = RetroPreference.create(
+        StoragePreference preference = RetroPreference.create(
                 mAppContext,
-                ClearablePreference.class,
+                StoragePreference.class,
                 Context.MODE_PRIVATE);
 
         preference.username().set("twiceYuan");
         preference.password().set("password");
 
-        MockUser mockUser = new MockUser();
-        mockUser.username = "twiceYuan";
-        preference.user().set(mockUser);
-
         Assert.assertEquals("twiceYuan", preference.username().get());
         Assert.assertEquals("password", preference.password().get());
-
-        MockUser user = preference.user().get();
-        Assert.assertNotNull(user);
-        Assert.assertEquals("twiceYuan", user.username);
 
         preference.clear();
 
         Assert.assertNull(preference.username().get());
         Assert.assertNull(preference.username().get());
-        Assert.assertNull(preference.user().get());
     }
 }

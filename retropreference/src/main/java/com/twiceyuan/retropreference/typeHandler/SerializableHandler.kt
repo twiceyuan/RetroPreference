@@ -29,7 +29,6 @@ class SerializableHandler(preferences: SharedPreferences,
         } catch (e: IOException) {
             e.printStackTrace()
         }
-
     }
 
     /**

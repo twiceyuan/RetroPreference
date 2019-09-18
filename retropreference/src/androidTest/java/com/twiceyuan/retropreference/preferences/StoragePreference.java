@@ -1,19 +1,16 @@
 package com.twiceyuan.retropreference.preferences;
 
-import com.twiceyuan.retropreference.Clearable;
+import com.twiceyuan.retropreference.KVStorage;
 import com.twiceyuan.retropreference.Preference;
-import com.twiceyuan.retropreference.model.MockUser;
 
 /**
  * Created by twiceYuan on 10/02/2017.
  * <p>
- * Clearable Preference
+ * KVStorage Preference
  */
-public interface ClearablePreference extends Clearable {
+public interface StoragePreference extends KVStorage {
 
     Preference<String> username();
 
     Preference<String> password();
-
-    Preference<MockUser> user();
 }

@@ -1,16 +1,15 @@
 package com.twiceyuan.retropreference
 
 import android.content.Context
-import android.content.SharedPreferences
+import com.twiceyuan.retropreference.adapters.SharedPreferencesAdapter
 import com.twiceyuan.retropreference.annotations.FileName
 import com.twiceyuan.retropreference.annotations.KeyName
 import com.twiceyuan.retropreference.annotations.PreferenceBuilder
 import com.twiceyuan.retropreference.exceptions.KeyNameError
-import com.twiceyuan.retropreference.typeHandler.BaseTypeHandler
-import com.twiceyuan.retropreference.typeHandler.SerializableHandler
-import com.twiceyuan.retropreference.typeHandler.TypeHandlerFactory
-import java.io.Serializable
-import java.lang.reflect.*
+import java.lang.reflect.InvocationHandler
+import java.lang.reflect.Method
+import java.lang.reflect.ParameterizedType
+import java.lang.reflect.Proxy
 
 /**
  * Created by twiceYuan on 20/01/2017.
@@ -23,69 +22,34 @@ object RetroPreference {
     private const val SERIALIZABLE_FILE_PREFIX = "RetroPreference_"
 
     @JvmStatic
-    fun <T> create(context: Context, preferenceClass: Class<T>, mode: Int): T = createKt(context, preferenceClass, mode)
+    fun <T : KVStorage> create(context: Context, preferenceClass: Class<T>, mode: Int): T = createKt(context, preferenceClass, mode)
 
-    inline fun <reified T> createKt(context: Context, mode: Int): T = createKt(context, T::class.java, mode)
+    inline fun <reified T : KVStorage> createKt(context: Context, mode: Int): T = createKt(context, T::class.java, mode)
 
-    fun <T> createKt(context: Context, preferenceClass: Class<T>, mode: Int): T {
+    fun <T : KVStorage> createKt(context: Context, preferenceClass: Class<T>, mode: Int): T {
 
         val preferenceName = getFileName(preferenceClass)
-        val preferences = context.getSharedPreferences(preferenceName, mode)
 
+        val adapter = SharedPreferencesAdapter(context, preferenceName)
         val loader = preferenceClass.classLoader
         val implementClassed = arrayOf<Class<*>>(preferenceClass)
 
         @Suppress("UNCHECKED_CAST")
-        return Proxy.newProxyInstance(loader, implementClassed, InvocationHandler { proxy, method, _ ->
-            if (proxy is Clearable && handleClearMethod(context, preferenceClass, preferences, method)) {
+        return Proxy.newProxyInstance(loader, implementClassed, InvocationHandler { _, method, _ ->
+            if (method.name == KVStorage::clear.name) {
+                adapter.clear()
                 return@InvocationHandler null
+            }
+
+            if (method.name == KVStorage::allKeys.name) {
+                return@InvocationHandler adapter.allKeys()
             }
 
             val key = getKeyNameFromMethod(method)
             val returnType = method.genericReturnType
-            // checked
             val preferenceType = getParameterUpperBound(0, returnType as ParameterizedType)
-            var handler: BaseTypeHandler<Any>? = TypeHandlerFactory.build(preferences, preferenceType)
-
-            if (handler == null && isSerializable(preferenceType)) {
-                handler = SerializableHandler(preferences, getFileName(preferenceClass), context, preferenceType)
-            }
-
-            // if handler is still null
-            if (handler == null) {
-                val message = "SharedPreferences does not support this type: $preferenceType"
-                throw IllegalStateException(message)
-            }
-            PreferenceBuilder(key, handler).build()
+            PreferenceBuilder(key, preferenceType, adapter).build()
         }) as T
-    }
-
-    private fun isSerializable(type: Type): Boolean {
-        val interfaces = if (type is ParameterizedType) {
-            (type.rawType as? Class<*>)?.interfaces
-        } else {
-            (type as? Class<*>)?.interfaces
-        }
-        if (interfaces == null || interfaces.isEmpty()) return false
-        return interfaces.any { it == Serializable::class.java }
-    }
-
-    private fun handleClearMethod(
-            context: Context,
-            preferenceClass: Class<*>,
-            preferences: SharedPreferences,
-            method: Method
-    ): Boolean {
-        return if (method.declaringClass == Clearable::class.java) {
-            preferences.edit().clear().apply()
-            val dir = context.getDir(getFileName(preferenceClass), Context.MODE_PRIVATE)
-            if (dir.exists()) {
-                dir.listFiles().filter { it.exists() }.forEach { it.delete() }
-            }
-            true
-        } else {
-            false
-        }
     }
 
     /**

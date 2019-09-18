@@ -1,5 +1,6 @@
 package com.twiceyuan.retropreference.preferences;
 
+import com.twiceyuan.retropreference.KVStorage;
 import com.twiceyuan.retropreference.Preference;
 import com.twiceyuan.retropreference.annotations.FileName;
 import com.twiceyuan.retropreference.annotations.KeyName;
@@ -12,7 +13,7 @@ import java.util.Set;
  * Mock setting items
  */
 @FileName("annotation_sp_file")
-public interface AnnotationSettings {
+public interface AnnotationSettings extends KVStorage {
 
     @KeyName("launch_count")
     Preference<Integer> launchCount();

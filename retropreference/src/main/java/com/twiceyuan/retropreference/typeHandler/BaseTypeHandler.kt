@@ -18,7 +18,7 @@ abstract class BaseTypeHandler<Type>(internal var mPreferences: SharedPreference
         return null
     }
 
-    fun clear(key: String) {
+    fun remove(key: String) {
         mPreferences.edit().remove(key).apply()
     }
 }

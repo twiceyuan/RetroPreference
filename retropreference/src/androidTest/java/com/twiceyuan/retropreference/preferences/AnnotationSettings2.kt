@@ -1,5 +1,6 @@
 package com.twiceyuan.retropreference.preferences
 
+import com.twiceyuan.retropreference.KVStorage
 import com.twiceyuan.retropreference.Preference
 import com.twiceyuan.retropreference.annotations.KeyName
 
@@ -8,7 +9,7 @@ import com.twiceyuan.retropreference.annotations.KeyName
  *
  * Mock setting items
  */
-interface AnnotationSettings2 {
+interface AnnotationSettings2 : KVStorage {
 
     @KeyName("is_login")
     fun isLogin(): Preference<Boolean>

@@ -22,7 +22,7 @@ public class IllegalDefineTest {
     private Context  mAppContext;
 
     @Before
-    public void useAppContext() throws Exception {
+    public void useAppContext() {
         // Context of the app under test.
         mAppContext = InstrumentationRegistry.getTargetContext();
     }

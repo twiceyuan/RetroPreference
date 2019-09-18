@@ -1,6 +1,6 @@
 package com.twiceyuan.retropreference.javasample;
 
-import com.twiceyuan.retropreference.Clearable;
+import com.twiceyuan.retropreference.KVStorage;
 import com.twiceyuan.retropreference.Preference;
 
 import java.util.HashMap;
@@ -10,7 +10,7 @@ import java.util.HashMap;
  *
  * Settings
  */
-public interface Settings extends Clearable {
+public interface Settings extends KVStorage {
 
     /**
      * Mark launch count

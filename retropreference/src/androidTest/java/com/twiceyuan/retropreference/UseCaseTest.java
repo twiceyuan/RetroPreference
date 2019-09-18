@@ -26,7 +26,7 @@ public class UseCaseTest {
     private Context  mAppContext;
 
     @Before
-    public void useAppContext() throws Exception {
+    public void useAppContext() {
         // Context of the app under test.
         mAppContext = InstrumentationRegistry.getTargetContext();
         mSettings = RetroPreference.create(mAppContext, Settings.class, Context.MODE_PRIVATE);
@@ -42,10 +42,8 @@ public class UseCaseTest {
                 Settings.class.getSimpleName(),
                 Context.MODE_PRIVATE);
         String stored = preferences.getString("username", "");
-        if (!stored.equals("twiceYuan")) {
-            throw new AssertionError();
-        }
-        mSettings.username().clear();
+        Assert.assertEquals("twiceYuan", stored);
+        mSettings.username().remove();
     }
 
     /**
@@ -60,20 +58,7 @@ public class UseCaseTest {
 
         String storedUsername = mSettings.username().get();
         Assert.assertEquals("twiceYuan", storedUsername);
-        mSettings.username().clear();
-    }
-
-    /**
-     * 测试默认值的作用
-     */
-    @Test
-    public void getWithDefault() {
-        String username = mSettings.username().getWithDefault("Anonymous");
-        Assert.assertEquals(username, "Anonymous");
-        mSettings.username().set("twiceYuan");
-        username = mSettings.username().getWithDefault("Anonymous");
-        Assert.assertEquals(username, "twiceYuan");
-        mSettings.username().clear();
+        mSettings.username().remove();
     }
 
     /**
@@ -86,7 +71,7 @@ public class UseCaseTest {
         if (stored == null || stored != 7) {
             throw new AssertionError();
         }
-        mSettings.launch_count().clear();
+        mSettings.launch_count().remove();
     }
 
     /**
@@ -97,7 +82,7 @@ public class UseCaseTest {
         mSettings.is_login().set(true);
         Boolean isLogin = mSettings.is_login().get();
         Assert.assertTrue(isLogin == null || isLogin);
-        mSettings.is_login().clear();
+        mSettings.is_login().remove();
     }
 
     /**
@@ -109,7 +94,7 @@ public class UseCaseTest {
         Float value = mSettings.user_points().get();
         value = value == null ? 0 : value;
         Assert.assertEquals(1.1f, value, 0);
-        mSettings.user_points().clear();
+        mSettings.user_points().remove();
     }
 
     /**
@@ -121,7 +106,7 @@ public class UseCaseTest {
         Long value = mSettings.last_login().get();
         value = value == null ? 0 : value;
         Assert.assertEquals(12378217381L, value, 0);
-        mSettings.last_login().clear();
+        mSettings.last_login().remove();
     }
 
     /**
@@ -131,7 +116,7 @@ public class UseCaseTest {
     public void testString() {
         mSettings.username().set("twiceYuan");
         Assert.assertEquals("twiceYuan", mSettings.username().get());
-        mSettings.username().clear();
+        mSettings.username().remove();
     }
 
     /**
@@ -154,6 +139,6 @@ public class UseCaseTest {
         Arrays.sort(storedArray);
 
         Assert.assertArrayEquals(originArray, storedArray);
-        mSettings.user_tags().clear();
+        mSettings.user_tags().remove();
     }
 }

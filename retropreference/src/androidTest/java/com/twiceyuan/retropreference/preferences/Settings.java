@@ -1,5 +1,6 @@
 package com.twiceyuan.retropreference.preferences;
 
+import com.twiceyuan.retropreference.KVStorage;
 import com.twiceyuan.retropreference.Preference;
 
 import java.util.Set;
@@ -9,7 +10,7 @@ import java.util.Set;
  *
  * Mock setting items
  */
-public interface Settings {
+public interface Settings extends KVStorage {
 
     Preference<Integer> launch_count();
 
